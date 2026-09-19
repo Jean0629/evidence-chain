@@ -1,4 +1,6 @@
-﻿namespace EvidenceChain.Domain.Entities
+﻿using EvidenceChain.Domain.Services;
+
+namespace EvidenceChain.Domain.Entities
 {
     public enum CustodyEventType { Created, TransferRequested, TransferAccpted, TransferRejected }
 
@@ -15,5 +17,20 @@
         public DateTime OcurredAtUtc { get; set; }
         public string PreviousHash { get; set; } = default!;
         public string Hash { get; set; } = default!;
+
+        public static CustodyEvent Create(Guid evidenceId, CustodyEventType type, Guid actorId, DateTime ocurredAtUtc, string previosHash)
+        {
+            var hash = EventHasher.ComputeHash(evidenceId, type.ToString(), actorId, ocurredAtUtc, previosHash);
+            return new CustodyEvent
+            {
+                Id = Guid.NewGuid(),
+                EvidenceId = evidenceId,
+                Type = type,
+                ActorId = actorId,
+                OcurredAtUtc = ocurredAtUtc,
+                PreviousHash = previosHash,
+                Hash = previosHash
+            };
+        }
     }
 }
