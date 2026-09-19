@@ -1,0 +1,15 @@
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\bin\Debug\net10.0\EvidenceChain.Application.deps.json
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\bin\Debug\net10.0\EvidenceChain.Application.dll
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\bin\Debug\net10.0\EvidenceChain.Application.pdb
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\bin\Debug\net10.0\EvidenceChain.Domain.dll
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\bin\Debug\net10.0\EvidenceChain.Domain.pdb
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\EvidenceChain.Application.csproj.AssemblyReference.cache
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\EvidenceChain.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\EvidenceChain.Application.AssemblyInfoInputs.cache
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\EvidenceChain.Application.AssemblyInfo.cs
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\EvidenceChain.Application.csproj.CoreCompileInputs.cache
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\Evidence.0039B2B2.Up2Date
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\EvidenceChain.Application.dll
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\refint\EvidenceChain.Application.dll
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\EvidenceChain.Application.pdb
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\ref\EvidenceChain.Application.dll
