@@ -10,6 +10,7 @@ namespace EvidenceChain.Domain.Entities
         public String Code { get; set; } = default!;
         public String Description { get; set; } = default!;
         public Guid CurrentCustodianId { get; set; }
+        public Custodian CurrentCustodian { get; set; } = default!;
         public DateTime CreatedAtUtc { get; set; }
 
         public List<CustodyEvent> Events { get; set; } = new();

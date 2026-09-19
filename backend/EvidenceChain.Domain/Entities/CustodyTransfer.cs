@@ -6,7 +6,6 @@
     {
         public Guid Id { get; set; }
         public Guid EvidenceId { get; set; }
-        public Evidence Evidence { get; set; } = default!;
         public Guid FromCustodianId {  get; set; }
         public Guid ToCustodianId {  get; set; }
         public Custodian FromCustodian { get; set; } = default!;

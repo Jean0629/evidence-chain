@@ -10,6 +10,8 @@
         public CustodyEventType Type { get; set; }
         public Guid ActorId { get; set; }
         public Custodian Actor { get; set; } = default!;
+        public Guid? RelatedTransferId { get; set; }
+        public CustodyTransfer? RelatedTransfer { get; set; }
         public DateTime OcurredAtUtc { get; set; }
         public string PreviousHash { get; set; } = default!;
         public string Hash { get; set; } = default!;
