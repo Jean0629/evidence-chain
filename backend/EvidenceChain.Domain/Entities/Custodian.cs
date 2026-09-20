@@ -7,5 +7,6 @@
         public Guid Id { get; set; }
         public string DisplayName { get; set; } = default!;
         public CustodianRole Role {  get; set; }
+        public string LoginCode { get; set; } = default!;
     }
 }

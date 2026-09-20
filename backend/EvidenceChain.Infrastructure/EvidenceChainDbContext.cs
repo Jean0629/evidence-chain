@@ -15,6 +15,10 @@ public class EvidenceChainDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Custodian>()
+            .HasIndex(c => c.LoginCode)
+            .IsUnique();
+
         // Concurrencia Optimista
         modelBuilder.Entity<CustodyTransfer>()
             .Property(x => x.RowVersion)

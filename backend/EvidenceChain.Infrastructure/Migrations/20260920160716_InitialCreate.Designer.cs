@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EvidenceChain.Infrastructure.Migrations
 {
     [DbContext(typeof(EvidenceChainDbContext))]
-    [Migration("20260920042640_InitialCreate")]
+    [Migration("20260920160716_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -35,10 +35,17 @@ namespace EvidenceChain.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LoginCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LoginCode")
+                        .IsUnique();
 
                     b.ToTable("Custodians");
                 });
@@ -147,6 +154,23 @@ namespace EvidenceChain.Infrastructure.Migrations
                     b.HasIndex("CurrentCustodianId", "CreatedAtUtc");
 
                     b.ToTable("Evidences");
+                });
+
+            modelBuilder.Entity("EvidenceChain.Domain.Entities.IdempotencyKeyRecord", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResponseBody")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Key");
+
+                    b.ToTable("IdempotencyKeys");
                 });
 
             modelBuilder.Entity("EvidenceChain.Domain.Entities.CustodyEvent", b =>

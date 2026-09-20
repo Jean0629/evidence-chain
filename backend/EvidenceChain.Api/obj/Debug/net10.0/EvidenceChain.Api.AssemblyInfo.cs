@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EvidenceChain.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2680582c8a4fd304e800dd6226c4c2b2df89767b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eabb2ff418d2e6c1dd49bf014f218e862e86a668")]
 [assembly: System.Reflection.AssemblyProductAttribute("EvidenceChain.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EvidenceChain.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -17,11 +17,25 @@ namespace EvidenceChain.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    LoginCode = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Custodians", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IdempotencyKeys",
+                columns: table => new
+                {
+                    Key = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ResponseBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAtUtc = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdempotencyKeys", x => x.Key);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,6 +125,12 @@ namespace EvidenceChain.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Custodians_LoginCode",
+                table: "Custodians",
+                column: "LoginCode",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CustodyEvents_ActorId",
                 table: "CustodyEvents",
                 column: "ActorId");
@@ -146,6 +166,9 @@ namespace EvidenceChain.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CustodyEvents");
+
+            migrationBuilder.DropTable(
+                name: "IdempotencyKeys");
 
             migrationBuilder.DropTable(
                 name: "CustodyTransfers");

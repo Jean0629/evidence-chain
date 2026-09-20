@@ -32,10 +32,17 @@ namespace EvidenceChain.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("LoginCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LoginCode")
+                        .IsUnique();
 
                     b.ToTable("Custodians");
                 });
