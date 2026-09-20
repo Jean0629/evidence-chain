@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "EvidenceChain.Api.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/v1/auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "EvidenceChain.Application.Auth.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EvidenceChain.Api.Controllers.CustodiansController",
+    "Method": "GetAll",
+    "RelativePath": "api/v1/custodians",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "EvidenceChain.Api.Controllers.CustodyTransfersController",
     "Method": "Create",
     "RelativePath": "api/v1/custody-transfers",

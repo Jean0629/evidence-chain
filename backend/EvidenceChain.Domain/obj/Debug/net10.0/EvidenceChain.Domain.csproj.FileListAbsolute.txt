@@ -9,3 +9,4 @@ C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Domain\obj\Debug\net10.0\refint\EvidenceChain.Domain.dll
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Domain\obj\Debug\net10.0\EvidenceChain.Domain.pdb
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Domain\obj\Debug\net10.0\ref\EvidenceChain.Domain.dll
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Domain\obj\Debug\net10.0\Evidence.DEBD5ED0.Up2Date

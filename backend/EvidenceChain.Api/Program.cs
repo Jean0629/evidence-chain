@@ -1,11 +1,17 @@
+using EvidenceChain.Application.Auth;
 using EvidenceChain.Application.Evidence;
 using EvidenceChain.Application.Transfers;
 using EvidenceChain.Domain.Exceptions;
 using EvidenceChain.Infrastructure;
+using EvidenceChain.Infrastructure.Auth;
 using EvidenceChain.Infrastructure.Queries;
 using EvidenceChain.Infrastructure.Transfers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +20,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header usando el esquema Bearer. Ejemplo: \"Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+    });
+});
+
 
 builder.Services.AddDbContext<EvidenceChainDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
@@ -22,6 +44,27 @@ builder.Services.AddDbContext<EvidenceChainDbContext>(options =>
 builder.Services.AddScoped<IEvidenceQueries, EvidenceQueries>();
 builder.Services.AddScoped<IChainVerification, ChainVerification>();
 builder.Services.AddScoped<ICustodyTransferService, CustodyTransferService>();
+
+var jwtSecret = builder.Configuration["Jwt:Secret"]!;
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret))
+        };
+    });
+
+builder.Services.AddAuthorization();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 var app = builder.Build();
 
@@ -35,6 +78,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
@@ -59,6 +103,10 @@ app.UseExceptionHandler(errApp =>
             case ConcurrencyConflictException cce:
                 context.Response.StatusCode = 409;
                 await context.Response.WriteAsJsonAsync(new { type = "concurrency-conflict", title = cce.Message, status = 409, currentStatus = cce.CurrentStatus });
+                break;
+            case ForbiddenTransferActionException fte:
+                context.Response.StatusCode = 403;
+                await context.Response.WriteAsJsonAsync(new { title = fte.Message, status = 403 });
                 break;
             default:
                 context.Response.StatusCode = 500;

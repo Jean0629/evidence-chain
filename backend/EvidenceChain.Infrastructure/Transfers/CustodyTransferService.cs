@@ -23,11 +23,14 @@ namespace EvidenceChain.Infrastructure.Transfers
             var evidence = await db.Evidences.FirstOrDefaultAsync(e => e.Id == request.EvidenceId)
                 ?? throw new KeyNotFoundException("Evidencia no encontrada.");
 
+            if (request.ToCustodianId == evidence.CurrentCustodianId)
+                throw new InvalidOperationException("No se puede transferir la evidencia al mismo custodio que ya la tiene.");
+
             var transfer = new CustodyTransfer
             {
                 Id = Guid.NewGuid(),
                 EvidenceId = request.EvidenceId,
-                FromCustodianId = requestedByCustodianId,
+                FromCustodianId = evidence.CurrentCustodianId,
                 ToCustodianId = request.ToCustodianId,
                 Status = TransferStatus.Pending,
                 RequestedAtUtc = DateTime.UtcNow
@@ -59,17 +62,19 @@ namespace EvidenceChain.Infrastructure.Transfers
             return dto;
         }
 
-        public Task<TransferResponseDto> AcceptAsync(Guid transferId, string ifMatchETag) =>
-            ResolveAsync(transferId, ifMatchETag, t => t.Accept(), CustodyEventType.TransferAccepted);
+        public Task<TransferResponseDto> AcceptAsync(Guid transferId, string ifMatchETag, Guid currentUserId) =>
+            ResolveAsync(transferId, ifMatchETag, currentUserId, t => t.Accept(), CustodyEventType.TransferAccepted);
 
-        public Task<TransferResponseDto> RejectAsync(Guid transferId, string ifMatchETag) =>
-            ResolveAsync(transferId, ifMatchETag, t => t.Reject(), CustodyEventType.TransferRejected);
+        public Task<TransferResponseDto> RejectAsync(Guid transferId, string ifMatchETag, Guid currentUserId) =>
+            ResolveAsync(transferId, ifMatchETag, currentUserId, t => t.Reject(), CustodyEventType.TransferRejected);
 
-        private async Task<TransferResponseDto> ResolveAsync(
-            Guid transferId, string ifMatchETag, Action<CustodyTransfer> transition, CustodyEventType eventType)
+        private async Task<TransferResponseDto> ResolveAsync(Guid transferId, string ifMatchETag, Guid currentUserId, Action<CustodyTransfer> transition, CustodyEventType eventType)
         {
             var transfer = await db.CustodyTransfers.FirstOrDefaultAsync(t => t.Id == transferId)
                 ?? throw new KeyNotFoundException("Transferencia no encontrada.");
+
+            if (transfer.ToCustodianId != currentUserId)
+                throw new ForbiddenTransferActionException();
 
             db.Entry(transfer).Property(t => t.RowVersion).OriginalValue = DecodeETag(ifMatchETag);
 

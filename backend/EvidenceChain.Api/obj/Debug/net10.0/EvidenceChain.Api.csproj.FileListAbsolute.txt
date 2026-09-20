@@ -175,3 +175,4 @@ C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Api\bin\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Api\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Api\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Api\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
