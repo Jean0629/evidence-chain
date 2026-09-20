@@ -20,7 +20,7 @@ namespace EvidenceChain.Api.Controllers
                 return Problem(title: "Código de acceso no encontrado", statusCode: 404);
 
             var token = tokenService.GenerateToken(custodian);
-            return Ok(new LoginResponse(token, custodian.DisplayName, custodian.Role.ToString()));
+            return Ok(new LoginResponse(token, custodian.Id, custodian.DisplayName, custodian.Role.ToString()));
         }
 
     }

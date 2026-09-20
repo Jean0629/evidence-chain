@@ -36,7 +36,7 @@ namespace EvidenceChain.Infrastructure.Queries
 
             query = desc
                 ? query.OrderByDescending(x => x.CreatedAtUtc).ThenByDescending(x => x.Id)
-                : query.OrderBy(x => x.CreatedAtUtc).OrderBy(x => x.Id);
+                : query.OrderBy(x => x.CreatedAtUtc).ThenBy(x => x.Id);
 
             var items = await query
                 .Take(pageSize)
@@ -91,9 +91,21 @@ namespace EvidenceChain.Infrastructure.Queries
                 reason = $"Transferencia sin respuesta desde hace {overdue.Days} días (plazo: {expirationHours}h).";
             }
 
+            var pending = await db.CustodyTransfers
+                .Include(t => t.ToCustodian)
+                .Where(t => t.EvidenceId == id && t.Status == TransferStatus.Pending)
+                .OrderByDescending(t => t.RequestedAtUtc)
+                .FirstOrDefaultAsync();
+
+            var pendingDto = pending is null
+                ? null
+                : new PendingTransferDto(
+                    pending.Id, pending.ToCustodianId, pending.ToCustodian.DisplayName, pending.RequestedAtUtc,
+                    $"\"{Convert.ToBase64String(pending.RowVersion)}\"");
+
             return new EvidenceDetailDto(
-                evidence.Id, evidence.Code, evidence.Description, evidence.CurrentCustodian.DisplayName,
-                evidence.CreatedAtUtc, hasAnomaly, severity, reason);
+                evidence.Id, evidence.Code, evidence.Description, evidence.CurrentCustodianId, evidence.CurrentCustodian.DisplayName,
+                evidence.CreatedAtUtc, hasAnomaly, severity, reason, pendingDto);
         }
 
         public async Task<List<CustodyEventDto>> GetChainAsync(Guid evidenceId)

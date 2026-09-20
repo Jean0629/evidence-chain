@@ -17,3 +17,7 @@ C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Infrastructure\obj\Debug\net10.0\EvidenceChain.Infrastructure.pdb
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Infrastructure\obj\Debug\net10.0\EvidenceChain.Infrastructure.genruntimeconfig.cache
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Infrastructure\obj\Debug\net10.0\ref\EvidenceChain.Infrastructure.dll
+C:\Users\charli.ramirez\AppData\Local\Temp\ec-build-check\EvidenceChain.Infrastructure.deps.json
+C:\Users\charli.ramirez\AppData\Local\Temp\ec-build-check\EvidenceChain.Infrastructure.runtimeconfig.json
+C:\Users\charli.ramirez\AppData\Local\Temp\ec-build-check\EvidenceChain.Infrastructure.dll
+C:\Users\charli.ramirez\AppData\Local\Temp\ec-build-check\EvidenceChain.Infrastructure.pdb

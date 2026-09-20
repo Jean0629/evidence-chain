@@ -13,3 +13,6 @@ C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\refint\EvidenceChain.Application.dll
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\EvidenceChain.Application.pdb
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\backend\EvidenceChain.Application\obj\Debug\net10.0\ref\EvidenceChain.Application.dll
+C:\Users\charli.ramirez\AppData\Local\Temp\ec-build-check\EvidenceChain.Application.deps.json
+C:\Users\charli.ramirez\AppData\Local\Temp\ec-build-check\EvidenceChain.Application.dll
+C:\Users\charli.ramirez\AppData\Local\Temp\ec-build-check\EvidenceChain.Application.pdb

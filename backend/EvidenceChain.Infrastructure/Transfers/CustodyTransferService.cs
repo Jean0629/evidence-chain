@@ -82,6 +82,12 @@ namespace EvidenceChain.Infrastructure.Transfers
             {
                 transition(transfer);
 
+                if (transfer.Status == TransferStatus.Accepted)
+                {
+                    var evidence = await db.Evidences.FirstAsync(e => e.Id == transfer.EvidenceId);
+                    evidence.CurrentCustodianId = transfer.ToCustodianId;
+                }
+
                 var lastEvent = await db.CustodyEvents
                     .Where(e => e.EvidenceId == transfer.EvidenceId)
                     .OrderByDescending(e => e.OccurredAtUtc).ThenByDescending(e => e.Id)

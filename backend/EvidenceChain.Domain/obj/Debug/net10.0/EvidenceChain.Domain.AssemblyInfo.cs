@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EvidenceChain.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe957fa97bc77a397b6ee4455550c3ee8e218662")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c451c276e5316bd69446d7e5a8bc5ea61c71765f")]
 [assembly: System.Reflection.AssemblyProductAttribute("EvidenceChain.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EvidenceChain.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

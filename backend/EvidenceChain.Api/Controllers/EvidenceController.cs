@@ -12,9 +12,13 @@ namespace EvidenceChain.Api.Controllers
     public class EvidenceController(IEvidenceQueries evidenceQueries, IChainVerification chainVerification) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetPage([FromQuery] string? search, [FromQuery] Guid? custodianId, [FromQuery] string? cursor)
+        public async Task<IActionResult> GetPage([FromQuery] string? search, [FromQuery] Guid? custodianId, [FromQuery] string? cursor, [FromQuery] string? sort)
         {
-            var result = await evidenceQueries.GetPageAsync(search, custodianId, cursor);
+            var order = string.Equals(sort, "asc", StringComparison.OrdinalIgnoreCase)
+                ? SortOrder.Ascending
+                : SortOrder.Descending;
+
+            var result = await evidenceQueries.GetPageAsync(search, custodianId, cursor, order);
             return Ok(result);
         }
 

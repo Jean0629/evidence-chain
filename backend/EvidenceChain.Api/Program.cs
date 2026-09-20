@@ -66,6 +66,13 @@ builder.Services
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddCors(options =>
+    options.AddPolicy("Frontend", policy => policy
+        .WithOrigins(builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? ["http://localhost:5173"])
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithExposedHeaders("ETag")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -77,6 +84,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("Frontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -103,6 +112,10 @@ app.UseExceptionHandler(errApp =>
             case ConcurrencyConflictException cce:
                 context.Response.StatusCode = 409;
                 await context.Response.WriteAsJsonAsync(new { type = "concurrency-conflict", title = cce.Message, status = 409, currentStatus = cce.CurrentStatus });
+                break;
+            case InvalidOperationException ioe:
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsJsonAsync(new { title = ioe.Message, status = 400 });
                 break;
             case ForbiddenTransferActionException fte:
                 context.Response.StatusCode = 403;
