@@ -1,13 +1,15 @@
 ﻿using EvidenceChain.Application.DTOs;
 using EvidenceChain.Application.Evidence;
+using EvidenceChain.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EvidenceChain.Infrastructure.Queries
 {
-    public class EvidenceQueries(EvidenceChainDbContext db) : IEvidenceQueries
+    public class EvidenceQueries(EvidenceChainDbContext db, IConfiguration config) : IEvidenceQueries
     {
         public async Task<EvidencePageDto> GetPageAsync(string? search, Guid? custodianId, string? cursor, SortOrder order = SortOrder.Descending, int pageSize = 20)
         {
@@ -48,13 +50,47 @@ namespace EvidenceChain.Infrastructure.Queries
             return new EvidencePageDto(items, nextCursor);
         }
 
+        private static string CalculateSeverity(TimeSpan overdue, int expirationHours)
+        {
+            var overdueRatio = overdue.TotalHours / expirationHours;
+
+            return overdueRatio switch
+            {
+                < 2 => "low",
+                < 4 => "medium",
+                _ => "high"
+            };
+        }
+
         public async Task<EvidenceDetailDto?> GetByIdAsync(Guid id)
         {
-            return await db.Evidences
+            var evidence = await db.Evidences
                 .Include(x => x.CurrentCustodian)
-                .Where(x => x.Id == id)
-                .Select(x => new EvidenceDetailDto(x.Id, x.Code, x.Description, x.CurrentCustodian.DisplayName, x.CreatedAtUtc))
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (evidence == null) return null;
+
+            var expirationHours = config.GetValue<int>("TransferPolicy:ExpirationHours", 48);
+
+            var overdueTransfer = await db.CustodyTransfers
+                .Where(x => x.EvidenceId == id && x.Status == TransferStatus.Pending)
+                .OrderBy(x => x.RequestedAtUtc)
+                .FirstOrDefaultAsync(t => DateTime.UtcNow - t.RequestedAtUtc > TimeSpan.FromHours(expirationHours));
+
+            bool hasAnomaly = overdueTransfer is not null;
+            string? severity = null;
+            string? reason = null;
+
+            if (hasAnomaly)
+            {
+                var overdue = DateTime.UtcNow - overdueTransfer!.RequestedAtUtc;
+                severity = CalculateSeverity(overdue, expirationHours);
+                reason = $"Transferencia sin respuesta desde hace {overdue.Days} días (plazo: {expirationHours}h).";
+            }
+
+            return new EvidenceDetailDto(
+            evidence.Id, evidence.Code, evidence.Description, evidence.CurrentCustodian.DisplayName,
+            evidence.CreatedAtUtc, hasAnomaly, severity, reason);
         }
 
         public async Task<List<CustodyEventDto>> GetChainAsync(Guid evidenceId)

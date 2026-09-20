@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{FF9D5C92-9EAF-2477-7D5B-C6A3DA9FF1E9}|EvidenceChain.Infrastructure\\EvidenceChain.Infrastructure.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.infrastructure\\queries\\evidencequeries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF9D5C92-9EAF-2477-7D5B-C6A3DA9FF1E9}|EvidenceChain.Infrastructure\\EvidenceChain.Infrastructure.csproj|solutionrelative:evidencechain.infrastructure\\queries\\evidencequeries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{149891E5-705C-22AA-B470-09E19B2ABCEB}|EvidenceChain.Application\\EvidenceChain.Application.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.application\\dtos\\evidencedetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{149891E5-705C-22AA-B470-09E19B2ABCEB}|EvidenceChain.Application\\EvidenceChain.Application.csproj|solutionrelative:evidencechain.application\\dtos\\evidencedetaildto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{149891E5-705C-22AA-B470-09E19B2ABCEB}|EvidenceChain.Application\\EvidenceChain.Application.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.application\\evidence\\ievidencequeries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{149891E5-705C-22AA-B470-09E19B2ABCEB}|EvidenceChain.Application\\EvidenceChain.Application.csproj|solutionrelative:evidencechain.application\\evidence\\ievidencequeries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6826C169-6BEC-478D-D1B3-A825B323725F}|EvidenceChain.Api\\EvidenceChain.Api.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6826C169-6BEC-478D-D1B3-A825B323725F}|EvidenceChain.Api\\EvidenceChain.Api.csproj|solutionrelative:evidencechain.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6826C169-6BEC-478D-D1B3-A825B323725F}|EvidenceChain.Api\\EvidenceChain.Api.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{6826C169-6BEC-478D-D1B3-A825B323725F}|EvidenceChain.Api\\EvidenceChain.Api.csproj|solutionrelative:evidencechain.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{ABE2081E-96CC-B309-8FD9-7FB7B1B6B6C1}|EvidenceChain.Domain\\EvidenceChain.Domain.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.domain\\services\\eventhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{ABE2081E-96CC-B309-8FD9-7FB7B1B6B6C1}|EvidenceChain.Domain\\EvidenceChain.Domain.csproj|solutionrelative:evidencechain.domain\\services\\eventhasher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -20,14 +40,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{6826C169-6BEC-478D-D1B3-A825B323725F}|EvidenceChain.Api\\EvidenceChain.Api.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.api\\controllers\\evidencecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6826C169-6BEC-478D-D1B3-A825B323725F}|EvidenceChain.Api\\EvidenceChain.Api.csproj|solutionrelative:evidencechain.api\\controllers\\evidencecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{149891E5-705C-22AA-B470-09E19B2ABCEB}|EvidenceChain.Application\\EvidenceChain.Application.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.application\\evidence\\ievidencequeries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{149891E5-705C-22AA-B470-09E19B2ABCEB}|EvidenceChain.Application\\EvidenceChain.Application.csproj|solutionrelative:evidencechain.application\\evidence\\ievidencequeries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FF9D5C92-9EAF-2477-7D5B-C6A3DA9FF1E9}|EvidenceChain.Infrastructure\\EvidenceChain.Infrastructure.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.infrastructure\\queries\\evidencequeries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF9D5C92-9EAF-2477-7D5B-C6A3DA9FF1E9}|EvidenceChain.Infrastructure\\EvidenceChain.Infrastructure.csproj|solutionrelative:evidencechain.infrastructure\\queries\\evidencequeries.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF9D5C92-9EAF-2477-7D5B-C6A3DA9FF1E9}|EvidenceChain.Infrastructure\\EvidenceChain.Infrastructure.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.infrastructure\\queries\\chainverification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,10 +82,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{ABE2081E-96CC-B309-8FD9-7FB7B1B6B6C1}|EvidenceChain.Domain\\EvidenceChain.Domain.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.domain\\evidencechain.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{ABE2081E-96CC-B309-8FD9-7FB7B1B6B6C1}|EvidenceChain.Domain\\EvidenceChain.Domain.csproj|solutionrelative:evidencechain.domain\\evidencechain.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6826C169-6BEC-478D-D1B3-A825B323725F}|EvidenceChain.Api\\EvidenceChain.Api.csproj|c:\\users\\charli.ramirez\\documents\\proyectos\\evidence-chain\\backend\\evidencechain.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{6826C169-6BEC-478D-D1B3-A825B323725F}|EvidenceChain.Api\\EvidenceChain.Api.csproj|solutionrelative:evidencechain.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
   "DocumentGroupContainers": [
@@ -83,8 +91,34 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 8,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EvidenceDetailDto.cs",
+              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
+              "RelativeDocumentMoniker": "EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
+              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
+              "RelativeToolTip": "EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAC6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-20T13:28:11.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Api\\appsettings.json",
+              "RelativeDocumentMoniker": "EvidenceChain.Api\\appsettings.json",
+              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Api\\appsettings.json",
+              "RelativeToolTip": "EvidenceChain.Api\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-20T13:26:28.129Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
@@ -95,7 +129,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "EventHasher.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Domain\\Services\\EventHasher.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Domain\\Services\\EventHasher.cs",
@@ -108,33 +142,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ChainVerification.cs",
-              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\ChainVerification.cs",
-              "RelativeDocumentMoniker": "EvidenceChain.Infrastructure\\Queries\\ChainVerification.cs",
-              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\ChainVerification.cs",
-              "RelativeToolTip": "EvidenceChain.Infrastructure\\Queries\\ChainVerification.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAAABQAAABsAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-20T01:18:05.209Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\database\\EvidenceChain.Seed\\Program.cs",
-              "RelativeDocumentMoniker": "..\\database\\EvidenceChain.Seed\\Program.cs",
-              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\database\\EvidenceChain.Seed\\Program.cs",
-              "RelativeToolTip": "..\\database\\EvidenceChain.Seed\\Program.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-20T02:58:40.994Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "EvidenceController.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Api\\Controllers\\EvidenceController.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Api\\Controllers\\EvidenceController.cs",
@@ -147,7 +155,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "CustodyEventDto.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\DTOs\\CustodyEventDto.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Application\\DTOs\\CustodyEventDto.cs",
@@ -160,7 +168,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "IEvidenceQueries.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\Evidence\\IEvidenceQueries.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Application\\Evidence\\IEvidenceQueries.cs",
@@ -173,7 +181,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "EvidenceQueries.cs",
+              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
+              "RelativeDocumentMoniker": "EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
+              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
+              "RelativeToolTip": "EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAYwFgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-19T15:41:23.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\database\\EvidenceChain.Seed\\Program.cs",
+              "RelativeDocumentMoniker": "..\\database\\EvidenceChain.Seed\\Program.cs",
+              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\database\\EvidenceChain.Seed\\Program.cs",
+              "RelativeToolTip": "..\\database\\EvidenceChain.Seed\\Program.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-20T02:58:40.994Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Api\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "EvidenceChain.Api\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Api\\appsettings.Development.json",
+              "RelativeToolTip": "EvidenceChain.Api\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-19T05:28:21.369Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ChainVerification.cs",
+              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\ChainVerification.cs",
+              "RelativeDocumentMoniker": "EvidenceChain.Infrastructure\\Queries\\ChainVerification.cs",
+              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\ChainVerification.cs",
+              "RelativeToolTip": "EvidenceChain.Infrastructure\\Queries\\ChainVerification.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAABQAAABsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-20T01:18:05.209Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "CustodyEvent.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Domain\\Entities\\CustodyEvent.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Domain\\Entities\\CustodyEvent.cs",
@@ -186,20 +246,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "EvidenceQueries.cs",
-              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
-              "RelativeDocumentMoniker": "EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
-              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
-              "RelativeToolTip": "EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-19T15:41:23.243Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "CustodyTransfer.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Domain\\Entities\\CustodyTransfer.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Domain\\Entities\\CustodyTransfer.cs",
@@ -212,7 +259,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "EvidenceChainDbContext.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\EvidenceChainDbContext.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Infrastructure\\EvidenceChainDbContext.cs",
@@ -225,7 +272,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "EvidenceListItemDto.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\DTOs\\EvidenceListItemDto.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Application\\DTOs\\EvidenceListItemDto.cs",
@@ -238,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "EvidenceChain.Seed",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\database\\EvidenceChain.Seed\\EvidenceChain.Seed.csproj",
               "RelativeDocumentMoniker": "..\\database\\EvidenceChain.Seed\\EvidenceChain.Seed.csproj",
@@ -251,7 +298,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\database\\EvidenceChain.Seed\\appsettings.json",
               "RelativeDocumentMoniker": "..\\database\\EvidenceChain.Seed\\appsettings.json",
@@ -264,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "IChainVerification.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\Evidence\\IChainVerification.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Application\\Evidence\\IChainVerification.cs",
@@ -276,7 +323,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Api\\Program.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Api\\Program.cs",
@@ -289,7 +336,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "Custodian.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Domain\\Entities\\Custodian.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Domain\\Entities\\Custodian.cs",
@@ -301,7 +348,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "Evidence.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Domain\\Entities\\Evidence.cs",
               "RelativeDocumentMoniker": "EvidenceChain.Domain\\Entities\\Evidence.cs",
@@ -313,7 +360,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "EvidenceChain.Domain.csproj",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Domain\\EvidenceChain.Domain.csproj",
               "RelativeDocumentMoniker": "EvidenceChain.Domain\\EvidenceChain.Domain.csproj",
@@ -322,18 +369,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-09-19T06:43:16.494Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Api\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "EvidenceChain.Api\\appsettings.Development.json",
-              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Api\\appsettings.Development.json",
-              "RelativeToolTip": "EvidenceChain.Api\\appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-09-19T05:28:21.369Z"
             }
           ]
         },

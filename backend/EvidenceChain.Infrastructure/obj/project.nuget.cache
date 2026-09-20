@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cTc+5efELG4=",
+  "dgSpecHash": "rJfv1M7auG0=",
   "success": true,
   "projectFilePath": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\EvidenceChain.Infrastructure.csproj",
   "expectedPackageFiles": [
@@ -25,7 +25,9 @@
     "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\10.0.12\\microsoft.entityframeworkcore.sqlserver.10.0.12.nupkg.sha512",
     "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.12\\microsoft.extensions.caching.abstractions.10.0.12.nupkg.sha512",
     "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.extensions.caching.memory\\10.0.12\\microsoft.extensions.caching.memory.10.0.12.nupkg.sha512",
+    "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.12\\microsoft.extensions.configuration.10.0.12.nupkg.sha512",
     "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.12\\microsoft.extensions.configuration.abstractions.10.0.12.nupkg.sha512",
+    "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.12\\microsoft.extensions.configuration.binder.10.0.12.nupkg.sha512",
     "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.12\\microsoft.extensions.dependencyinjection.10.0.12.nupkg.sha512",
     "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.12\\microsoft.extensions.dependencyinjection.abstractions.10.0.12.nupkg.sha512",
     "C:\\Users\\charli.ramirez\\.nuget\\packages\\microsoft.extensions.dependencymodel\\10.0.12\\microsoft.extensions.dependencymodel.10.0.12.nupkg.sha512",
