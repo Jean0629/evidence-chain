@@ -1,4 +1,6 @@
-﻿namespace EvidenceChain.Domain.Entities
+﻿using EvidenceChain.Domain.Exceptions;
+
+namespace EvidenceChain.Domain.Entities
 {
     public enum TransferStatus { Pending, Accepted, Rejected, Expired }
 
@@ -14,5 +16,23 @@
         public DateTime RequestedAtUtc { get; set; }
         public DateTime? ResolvedAtUtc { get; set; }
         public byte[] RowVersion { get; set; } = default!;
+
+        public void Accept()
+        {
+            if (Status != TransferStatus.Pending)
+                throw new InvalidTransitionException(Status.ToString(), "aceptar");
+
+            Status = TransferStatus.Accepted;
+            ResolvedAtUtc = DateTime.UtcNow;
+        }
+
+        public void Reject()
+        {
+            if (Status != TransferStatus.Pending)
+                throw new InvalidTransitionException(Status.ToString(), "rechazar");
+
+            Status = TransferStatus.Rejected;
+            ResolvedAtUtc = DateTime.UtcNow;
+        }
     }
 }

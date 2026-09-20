@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EvidenceChain.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4fab7bd5b8c93d04502010f18c34b07a759fcf9d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6587331d2417a8e7b53bf332f0cda3092e7cfdc4")]
 [assembly: System.Reflection.AssemblyProductAttribute("EvidenceChain.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EvidenceChain.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
