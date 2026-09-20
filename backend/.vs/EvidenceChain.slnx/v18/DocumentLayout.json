@@ -91,20 +91,15 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 6,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EvidenceDetailDto.cs",
-              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
-              "RelativeDocumentMoniker": "EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
-              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
-              "RelativeToolTip": "EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAC6AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-20T13:28:11.936Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
@@ -118,14 +113,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2026-09-20T13:26:28.129Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
@@ -168,6 +155,32 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EvidenceQueries.cs",
+              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
+              "RelativeDocumentMoniker": "EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
+              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
+              "RelativeToolTip": "EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAYwE8AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-19T15:41:23.243Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EvidenceDetailDto.cs",
+              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
+              "RelativeDocumentMoniker": "EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
+              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
+              "RelativeToolTip": "EvidenceChain.Application\\DTOs\\EvidenceDetailDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAC6AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-20T13:28:11.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "IEvidenceQueries.cs",
               "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Application\\Evidence\\IEvidenceQueries.cs",
@@ -177,19 +190,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-19T15:29:20.852Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EvidenceQueries.cs",
-              "DocumentMoniker": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
-              "RelativeDocumentMoniker": "EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
-              "ToolTip": "C:\\Users\\charli.ramirez\\Documents\\Proyectos\\evidence-chain\\backend\\EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
-              "RelativeToolTip": "EvidenceChain.Infrastructure\\Queries\\EvidenceQueries.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAYwFgAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-19T15:41:23.243Z",
               "EditorCaption": ""
             },
             {

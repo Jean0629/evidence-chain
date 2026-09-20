@@ -71,11 +71,14 @@ namespace EvidenceChain.Infrastructure.Queries
             if (evidence == null) return null;
 
             var expirationHours = config.GetValue<int>("TransferPolicy:ExpirationHours", 48);
+            var cutoff = DateTime.UtcNow.AddHours(-expirationHours);
 
             var overdueTransfer = await db.CustodyTransfers
-                .Where(x => x.EvidenceId == id && x.Status == TransferStatus.Pending)
-                .OrderBy(x => x.RequestedAtUtc)
-                .FirstOrDefaultAsync(t => DateTime.UtcNow - t.RequestedAtUtc > TimeSpan.FromHours(expirationHours));
+                .Where(t => t.EvidenceId == id
+                         && t.Status == TransferStatus.Pending
+                         && t.RequestedAtUtc < cutoff)
+                .OrderBy(t => t.RequestedAtUtc)
+                .FirstOrDefaultAsync();
 
             bool hasAnomaly = overdueTransfer is not null;
             string? severity = null;
@@ -89,8 +92,8 @@ namespace EvidenceChain.Infrastructure.Queries
             }
 
             return new EvidenceDetailDto(
-            evidence.Id, evidence.Code, evidence.Description, evidence.CurrentCustodian.DisplayName,
-            evidence.CreatedAtUtc, hasAnomaly, severity, reason);
+                evidence.Id, evidence.Code, evidence.Description, evidence.CurrentCustodian.DisplayName,
+                evidence.CreatedAtUtc, hasAnomaly, severity, reason);
         }
 
         public async Task<List<CustodyEventDto>> GetChainAsync(Guid evidenceId)
