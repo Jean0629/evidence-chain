@@ -35,7 +35,8 @@ namespace EvidenceChain.Api.Controllers
             if (string.IsNullOrWhiteSpace(ifMatch))
                 return Problem(title: "Falta el header If-Match", statusCode: 400);
 
-            var result = await service.AcceptAsync(id, ifMatch);
+            var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var result = await service.AcceptAsync(id, ifMatch, currentUserId);
             Response.Headers.ETag = result.ETag;
             return Ok(result);
         }
@@ -48,7 +49,8 @@ namespace EvidenceChain.Api.Controllers
             if (string.IsNullOrWhiteSpace(ifMatch))
                 return Problem(title: "Falta el header If-Match", statusCode: 400);
 
-            var result = await service.RejectAsync(id, ifMatch);
+            var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var result = await service.RejectAsync(id, ifMatch, currentUserId);
             Response.Headers.ETag = result.ETag;
             return Ok(result);
         }

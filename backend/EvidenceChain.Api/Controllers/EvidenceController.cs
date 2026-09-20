@@ -1,4 +1,5 @@
 ﻿using EvidenceChain.Application.Evidence;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -7,6 +8,7 @@ namespace EvidenceChain.Api.Controllers
 {
     [Route("api/v1/evidence")]
     [ApiController]
+    [Authorize]
     public class EvidenceController(IEvidenceQueries evidenceQueries, IChainVerification chainVerification) : ControllerBase
     {
         [HttpGet]
