@@ -11,9 +11,10 @@ namespace EvidenceChain.Domain.Services
         public const string Genesis = "GENESIS";
 
         // Formato canónico fijo, separador '|' no puede aparecer en los valores (GUId, DateTime, enum)
-        public static string ComputeHash(Guid evidenceId, string eventType, Guid actorId, DateTime ocurredAtUtc, string previousHash)
+        public static string ComputeHash(Guid evidenceId, string eventType, Guid actorId, DateTime occurredAtUtc, string previousHash)
         {
-            string canonical = $"{evidenceId}|{eventType}|{actorId}|{ocurredAtUtc:0}|{previousHash}";
+            string dateText = occurredAtUtc.ToString("yyyy-MM-ddTHH:mm:ss.fffffffZ");
+            string canonical = $"{evidenceId}|{eventType}|{actorId}|{dateText}|{previousHash}";
             byte[] bytes = SHA256.HashData(Encoding.UTF8.GetBytes(canonical));
             return Convert.ToHexString(bytes).ToLowerInvariant();
         }

@@ -1,4 +1,6 @@
+using EvidenceChain.Application.Evidence;
 using EvidenceChain.Infrastructure;
+using EvidenceChain.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,9 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<EvidenceChainDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+builder.Services.AddScoped<IEvidenceQueries, EvidenceQueries>();
+builder.Services.AddScoped<IChainVerification, ChainVerification>();
 
 var app = builder.Build();
 
@@ -18,6 +24,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

@@ -12,7 +12,7 @@
         public Custodian ToCustodian { get; set; } = default!;
         public TransferStatus Status {  get; set; } = TransferStatus.Pending;
         public DateTime RequestedAtUtc { get; set; }
-        public DateTime? ResolvedAtutc { get; set; }
+        public DateTime? ResolvedAtUtc { get; set; }
         public byte[] RowVersion { get; set; } = default!;
     }
 }

@@ -56,7 +56,7 @@ namespace EvidenceChain.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("OcurredAtUtc")
+                    b.Property<DateTime>("OccurredAtUtc")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PreviousHash")
@@ -95,7 +95,7 @@ namespace EvidenceChain.Infrastructure.Migrations
                     b.Property<DateTime>("RequestedAtUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ResolvedAtutc")
+                    b.Property<DateTime?>("ResolvedAtUtc")
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("RowVersion")

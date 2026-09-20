@@ -42,10 +42,29 @@ namespace EvidenceChain.Infrastructure.Queries
                 .ToListAsync();
 
             string? nextCursor = items.Count == pageSize
-                ? $"{items[^1].LastEventAtUtc:0}_{items[^1].Id}"
+                ? $"{items[^1].LastEventAtUtc:O}_{items[^1].Id}"
                 : null;
 
             return new EvidencePageDto(items, nextCursor);
+        }
+
+        public async Task<EvidenceDetailDto?> GetByIdAsync(Guid id)
+        {
+            return await db.Evidences
+                .Include(x => x.CurrentCustodian)
+                .Where(x => x.Id == id)
+                .Select(x => new EvidenceDetailDto(x.Id, x.Code, x.Description, x.CurrentCustodian.DisplayName, x.CreatedAtUtc))
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<CustodyEventDto>> GetChainAsync(Guid evidenceId)
+        {
+            return await db.CustodyEvents
+                .Include(x => x.Actor)
+                .Where(x => x.EvidenceId == evidenceId)
+                .OrderBy(x => x.OccurredAtUtc).ThenBy(x => x.Id)
+                .Select(x => new CustodyEventDto(x.Id, x.Type.ToString(), x.Actor.DisplayName, x.OccurredAtUtc, x.Hash, x.PreviousHash))
+                .ToListAsync();
         }
     }
 }

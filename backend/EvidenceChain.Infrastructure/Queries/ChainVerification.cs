@@ -10,7 +10,7 @@ namespace EvidenceChain.Infrastructure.Queries
         {
             var events = await db.CustodyEvents
                 .Where(x => x.EvidenceId == evidenceId)
-                .OrderBy(x => x.OcurredAtUtc)
+                .OrderBy(x => x.OccurredAtUtc)
                 .ThenBy(x => x.Id)
                 .ToListAsync();
 
@@ -18,7 +18,7 @@ namespace EvidenceChain.Infrastructure.Queries
 
             foreach (var ev in events)
             {
-                var expected = EventHasher.ComputeHash(ev.EvidenceId, ev.Type.ToString(), ev.ActorId, ev.OcurredAtUtc, prevHash);
+                var expected = EventHasher.ComputeHash(ev.EvidenceId, ev.Type.ToString(), ev.ActorId, ev.OccurredAtUtc, prevHash);
                 if (expected != ev.Hash)
                     return new ChainVerifyResult(false, ev.Id);
 

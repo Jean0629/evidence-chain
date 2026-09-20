@@ -9,5 +9,7 @@ namespace EvidenceChain.Application.Evidence
     public interface IEvidenceQueries
     {
         Task<EvidencePageDto> GetPageAsync(string? search, Guid? custodianId, string? cursor, SortOrder order = SortOrder.Descending, int pageSize = 20);
+        Task<EvidenceDetailDto?> GetByIdAsync(Guid id);
+        Task<List<CustodyEventDto>> GetChainAsync(Guid evidenceId);
     }
 }
