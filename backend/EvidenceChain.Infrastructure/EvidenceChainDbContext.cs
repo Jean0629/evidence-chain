@@ -11,6 +11,7 @@ public class EvidenceChainDbContext : DbContext
     public DbSet<Evidence> Evidences => Set<Evidence>();
     public DbSet<CustodyEvent> CustodyEvents => Set<CustodyEvent>();
     public DbSet<CustodyTransfer> CustodyTransfers => Set<CustodyTransfer>();
+    public DbSet<IdempotencyKeyRecord> IdempotencyKeys => Set<IdempotencyKeyRecord>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -52,5 +53,9 @@ public class EvidenceChainDbContext : DbContext
             .WithMany(ev => ev.Events)
             .HasForeignKey(x => x.EvidenceId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        // Idempotencia
+        modelBuilder.Entity<IdempotencyKeyRecord>()
+            .HasKey(k => k.Key);
     }
 }

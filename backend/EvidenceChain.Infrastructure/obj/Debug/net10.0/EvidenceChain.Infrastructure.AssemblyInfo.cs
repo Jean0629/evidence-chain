@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EvidenceChain.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31f121047dccdcd022c1daaaa9688331ff34f47f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2680582c8a4fd304e800dd6226c4c2b2df89767b")]
 [assembly: System.Reflection.AssemblyProductAttribute("EvidenceChain.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EvidenceChain.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,5 +1,53 @@
 [
   {
+    "ContainingType": "EvidenceChain.Api.Controllers.CustodyTransfersController",
+    "Method": "Create",
+    "RelativePath": "api/v1/custody-transfers",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "EvidenceChain.Application.DTOs.CreateTransferRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EvidenceChain.Api.Controllers.CustodyTransfersController",
+    "Method": "Accept",
+    "RelativePath": "api/v1/custody-transfers/{id}/accept",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EvidenceChain.Api.Controllers.CustodyTransfersController",
+    "Method": "Reject",
+    "RelativePath": "api/v1/custody-transfers/{id}/reject",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Guid",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "EvidenceChain.Api.Controllers.EvidenceController",
     "Method": "GetPage",
     "RelativePath": "api/v1/evidence",

@@ -1,0 +1,109 @@
+﻿using EvidenceChain.Application.DTOs;
+using EvidenceChain.Application.Transfers;
+using EvidenceChain.Domain.Entities;
+using EvidenceChain.Domain.Exceptions;
+using EvidenceChain.Domain.Services;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Text.Json;
+
+namespace EvidenceChain.Infrastructure.Transfers
+{
+    public class CustodyTransferService(EvidenceChainDbContext db) : ICustodyTransferService
+    {
+        public async Task<TransferResponseDto> CreateAsync(CreateTransferRequestDto request, string idempotencyKey, Guid requestedByCustodianId)
+        {
+            // -------------- 1. key ya procesada -------------------
+            var existing = await db.IdempotencyKeys.FindAsync(idempotencyKey);
+            if (existing is not null)
+                return JsonSerializer.Deserialize<TransferResponseDto>(existing.ResponseBody)!;
+
+            var evidence = await db.Evidences.FirstOrDefaultAsync(e => e.Id == request.EvidenceId)
+                ?? throw new KeyNotFoundException("Evidencia no encontrada.");
+
+            var transfer = new CustodyTransfer
+            {
+                Id = Guid.NewGuid(),
+                EvidenceId = request.EvidenceId,
+                FromCustodianId = requestedByCustodianId,
+                ToCustodianId = request.ToCustodianId,
+                Status = TransferStatus.Pending,
+                RequestedAtUtc = DateTime.UtcNow
+            };
+            db.CustodyTransfers.Add(transfer);
+
+            var lastEvent = await db.CustodyEvents
+                .Where(e => e.EvidenceId == request.EvidenceId)
+                .OrderByDescending(e => e.OccurredAtUtc).ThenByDescending(e => e.Id)
+                .FirstOrDefaultAsync();
+            var prevHash = lastEvent?.Hash ?? EventHasher.Genesis;
+
+            db.CustodyEvents.Add(CustodyEvent.Create(
+                request.EvidenceId, CustodyEventType.TransferRequested, requestedByCustodianId, transfer.RequestedAtUtc, prevHash));
+
+            await db.SaveChangesAsync();
+
+            var dto = ToDto(transfer);
+
+            // -------------- 2. Guardado de la respuesta asociada a la key -------------------
+            db.IdempotencyKeys.Add(new IdempotencyKeyRecord
+            {
+                Key = idempotencyKey,
+                ResponseBody = JsonSerializer.Serialize(dto),
+                CreatedAtUtc = DateTime.UtcNow
+            });
+            await db.SaveChangesAsync();
+
+            return dto;
+        }
+
+        public Task<TransferResponseDto> AcceptAsync(Guid transferId, string ifMatchETag) =>
+            ResolveAsync(transferId, ifMatchETag, t => t.Accept(), CustodyEventType.TransferAccepted);
+
+        public Task<TransferResponseDto> RejectAsync(Guid transferId, string ifMatchETag) =>
+            ResolveAsync(transferId, ifMatchETag, t => t.Reject(), CustodyEventType.TransferRejected);
+
+        private async Task<TransferResponseDto> ResolveAsync(
+            Guid transferId, string ifMatchETag, Action<CustodyTransfer> transition, CustodyEventType eventType)
+        {
+            var transfer = await db.CustodyTransfers.FirstOrDefaultAsync(t => t.Id == transferId)
+                ?? throw new KeyNotFoundException("Transferencia no encontrada.");
+
+            db.Entry(transfer).Property(t => t.RowVersion).OriginalValue = DecodeETag(ifMatchETag);
+
+            try
+            {
+                transition(transfer);
+
+                var lastEvent = await db.CustodyEvents
+                    .Where(e => e.EvidenceId == transfer.EvidenceId)
+                    .OrderByDescending(e => e.OccurredAtUtc).ThenByDescending(e => e.Id)
+                    .FirstOrDefaultAsync();
+                var prevHash = lastEvent?.Hash ?? EventHasher.Genesis;
+                var actorId = transfer.ToCustodianId;
+
+                db.CustodyEvents.Add(CustodyEvent.Create(transfer.EvidenceId, eventType, actorId, DateTime.UtcNow, prevHash));
+
+                await db.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                var currentStatus = await db.CustodyTransfers
+                    .Where(t => t.Id == transferId)
+                    .Select(t => t.Status)
+                    .FirstAsync();
+                throw new ConcurrencyConflictException(currentStatus.ToString());
+            }
+
+            return ToDto(transfer);
+        }
+
+        private static byte[] DecodeETag(string etag) => Convert.FromBase64String(etag.Trim('"'));
+
+        private static TransferResponseDto ToDto(CustodyTransfer t) => new(
+            t.Id, t.EvidenceId, t.Status.ToString(), t.FromCustodianId, t.ToCustodianId, t.RequestedAtUtc,
+            $"\"{Convert.ToBase64String(t.RowVersion)}\"");
+    }
+}
