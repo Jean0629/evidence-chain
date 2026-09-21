@@ -9,7 +9,7 @@ using System.Text;
 
 namespace EvidenceChain.Infrastructure.Queries
 {
-    public class EvidenceQueries(EvidenceChainDbContext db, IConfiguration config) : IEvidenceQueries
+    public class EvidenceQueries(EvidenceChainDbContext db, IConfiguration config, IChainVerification chainVerification) : IEvidenceQueries
     {
         public async Task<EvidencePageDto> GetPageAsync(string? search, Guid? custodianId, string? cursor, SortOrder order = SortOrder.Descending, int pageSize = 20)
         {
@@ -40,14 +40,21 @@ namespace EvidenceChain.Infrastructure.Queries
 
             var items = await query
                 .Take(pageSize)
-                .Select(x => new EvidenceListItemDto(x.Id, x.Code, x.Description, x.CurrentCustodian.DisplayName, x.CreatedAtUtc, false))
+                .Select(x => new EvidenceListItemDto(x.Id, x.Code, x.Description, x.CurrentCustodian.DisplayName, x.CreatedAtUtc, false, false))
                 .ToListAsync();
+
+            var itemsWithIntegrity = new List<EvidenceListItemDto>();
+            foreach (var item in items)
+            {
+                var verify = await chainVerification.VerifyAsync(item.Id);
+                itemsWithIntegrity.Add(item with { IsIntegrityValid = verify.IsValid });
+            }
 
             string? nextCursor = items.Count == pageSize
                 ? $"{items[^1].LastEventAtUtc:O}_{items[^1].Id}"
                 : null;
 
-            return new EvidencePageDto(items, nextCursor);
+            return new EvidencePageDto(itemsWithIntegrity, nextCursor);
         }
 
         private static string CalculateSeverity(TimeSpan overdue, int expirationHours)

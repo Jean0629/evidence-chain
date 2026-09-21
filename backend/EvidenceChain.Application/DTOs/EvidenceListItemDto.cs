@@ -5,5 +5,5 @@ using System.Text;
 
 namespace EvidenceChain.Application.DTOs
 {
-    public record EvidenceListItemDto(Guid Id, string Code, string Description, string CurrentCustodianName, DateTime LastEventAtUtc, bool HasAnomaly);
+    public record EvidenceListItemDto(Guid Id, string Code, string Description, string CurrentCustodianName, DateTime LastEventAtUtc, bool HasAnomaly, bool IsIntegrityValid);
 }
