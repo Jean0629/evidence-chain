@@ -1,4 +1,6 @@
-﻿using EvidenceChain.Infrastructure;
+﻿using EvidenceChain.Application.Custodians;
+using EvidenceChain.Infrastructure;
+using EvidenceChain.Infrastructure.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,12 +12,9 @@ namespace EvidenceChain.Api.Controllers
     [Route("api/v1/custodians")]
     [ApiController]
     [Authorize]
-    public class CustodiansController(EvidenceChainDbContext db) : ControllerBase
+    public class CustodiansController(ICustodianQueries custodianQueries) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll() =>
-            Ok(await db.Custodians
-                .Select(c => new { c.Id, c.DisplayName, Role = c.Role.ToString() })
-                .ToListAsync());
+        public async Task<IActionResult> GetAll() => Ok(await custodianQueries.GetAllAsync());
     }
 }

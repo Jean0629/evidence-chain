@@ -1,4 +1,5 @@
 using EvidenceChain.Application.Auth;
+using EvidenceChain.Application.Custodians;
 using EvidenceChain.Application.Evidence;
 using EvidenceChain.Application.Transfers;
 using EvidenceChain.Domain.Exceptions;
@@ -44,6 +45,7 @@ builder.Services.AddDbContext<EvidenceChainDbContext>(options =>
 builder.Services.AddScoped<IEvidenceQueries, EvidenceQueries>();
 builder.Services.AddScoped<IChainVerification, ChainVerification>();
 builder.Services.AddScoped<ICustodyTransferService, CustodyTransferService>();
+builder.Services.AddScoped<ICustodianQueries, CustodianQueries>();
 
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
 
