@@ -10,5 +10,6 @@ namespace EvidenceChain.Application.Transfers
         Task<TransferResponseDto> CreateAsync(CreateTransferRequestDto request, string idempotencyKey, Guid requestedByCustodianId);
         Task<TransferResponseDto> AcceptAsync(Guid transferId, string ifMatchETag, Guid currentUserId);
         Task<TransferResponseDto> RejectAsync(Guid transferId, string ifMatchETag, Guid currentUserId);
+        Task<List<MyPendingTransferDto>> GetPendingForCustodianAsync(Guid custodianId);
     }
 }

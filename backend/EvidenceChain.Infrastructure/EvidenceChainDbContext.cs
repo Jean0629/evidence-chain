@@ -40,6 +40,12 @@ public class EvidenceChainDbContext : DbContext
             .HasForeignKey(x => x.ToCustodianId)
             .OnDelete(DeleteBehavior.Restrict);
 
+        modelBuilder.Entity<CustodyTransfer>()
+            .HasOne(x => x.Evidence)
+            .WithMany()
+            .HasForeignKey(x => x.EvidenceId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         modelBuilder.Entity<Evidence>()
             .HasOne(x => x.CurrentCustodian)
             .WithMany()

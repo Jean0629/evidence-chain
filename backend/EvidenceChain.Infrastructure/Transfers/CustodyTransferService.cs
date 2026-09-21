@@ -68,6 +68,19 @@ namespace EvidenceChain.Infrastructure.Transfers
         public Task<TransferResponseDto> RejectAsync(Guid transferId, string ifMatchETag, Guid currentUserId) =>
             ResolveAsync(transferId, ifMatchETag, currentUserId, t => t.Reject(), CustodyEventType.TransferRejected);
 
+        public async Task<List<MyPendingTransferDto>> GetPendingForCustodianAsync(Guid custodianId)
+        {
+            return await db.CustodyTransfers
+                .Include(t => t.Evidence)
+                .Include(t => t.FromCustodian)
+                .Where(t => t.ToCustodianId == custodianId && t.Status == TransferStatus.Pending)
+                .OrderBy(t => t.RequestedAtUtc)
+                .Select(t => new MyPendingTransferDto(
+                    t.Id, t.EvidenceId, t.Evidence.Code, t.FromCustodian.DisplayName,
+                    t.RequestedAtUtc, $"\"{Convert.ToBase64String(t.RowVersion)}\""))
+                .ToListAsync();
+        }
+
         private async Task<TransferResponseDto> ResolveAsync(Guid transferId, string ifMatchETag, Guid currentUserId, Action<CustodyTransfer> transition, CustodyEventType eventType)
         {
             var transfer = await db.CustodyTransfers.FirstOrDefaultAsync(t => t.Id == transferId)

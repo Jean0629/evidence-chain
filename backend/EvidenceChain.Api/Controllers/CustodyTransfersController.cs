@@ -54,5 +54,14 @@ namespace EvidenceChain.Api.Controllers
             Response.Headers.ETag = result.ETag;
             return Ok(result);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Custodio")]
+        public async Task<IActionResult> GetPending()
+        {
+            var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var result = await service.GetPendingForCustodianAsync(currentUserId);
+            return Ok(result);
+        }
     }
 }
