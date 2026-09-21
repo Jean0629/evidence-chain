@@ -43,6 +43,16 @@
   },
   {
     "ContainingType": "EvidenceChain.Api.Controllers.CustodyTransfersController",
+    "Method": "GetPending",
+    "RelativePath": "api/v1/custody-transfers",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "EvidenceChain.Api.Controllers.CustodyTransfersController",
     "Method": "Accept",
     "RelativePath": "api/v1/custody-transfers/{id}/accept",
     "HttpMethod": "POST",

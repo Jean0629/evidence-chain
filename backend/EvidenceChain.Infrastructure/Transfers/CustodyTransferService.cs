@@ -1,8 +1,10 @@
 ﻿using EvidenceChain.Application.DTOs;
+using EvidenceChain.Application.Evidence;
 using EvidenceChain.Application.Transfers;
 using EvidenceChain.Domain.Entities;
 using EvidenceChain.Domain.Exceptions;
 using EvidenceChain.Domain.Services;
+using EvidenceChain.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,7 @@ using System.Text.Json;
 
 namespace EvidenceChain.Infrastructure.Transfers
 {
-    public class CustodyTransferService(EvidenceChainDbContext db) : ICustodyTransferService
+    public class CustodyTransferService(EvidenceChainDbContext db, IChainVerification chainVerification) : ICustodyTransferService
     {
         public async Task<TransferResponseDto> CreateAsync(CreateTransferRequestDto request, string idempotencyKey, Guid requestedByCustodianId)
         {
@@ -70,15 +72,24 @@ namespace EvidenceChain.Infrastructure.Transfers
 
         public async Task<List<MyPendingTransferDto>> GetPendingForCustodianAsync(Guid custodianId)
         {
-            return await db.CustodyTransfers
+            var items = await db.CustodyTransfers
                 .Include(t => t.Evidence)
                 .Include(t => t.FromCustodian)
                 .Where(t => t.ToCustodianId == custodianId && t.Status == TransferStatus.Pending)
                 .OrderBy(t => t.RequestedAtUtc)
                 .Select(t => new MyPendingTransferDto(
                     t.Id, t.EvidenceId, t.Evidence.Code, t.FromCustodian.DisplayName,
-                    t.RequestedAtUtc, $"\"{Convert.ToBase64String(t.RowVersion)}\""))
+                    t.RequestedAtUtc, $"\"{Convert.ToBase64String(t.RowVersion)}\"", false))
                 .ToListAsync();
+
+            var itemsWithIntegrity = new List<MyPendingTransferDto>();
+            foreach (var item in items)
+            {
+                var verify = await chainVerification.VerifyAsync(item.EvidenceId);
+                itemsWithIntegrity.Add(item with { IsIntegrityValid = verify.IsValid });
+            }
+
+            return itemsWithIntegrity;
         }
 
         private async Task<TransferResponseDto> ResolveAsync(Guid transferId, string ifMatchETag, Guid currentUserId, Action<CustodyTransfer> transition, CustodyEventType eventType)

@@ -77,6 +77,16 @@
             "description": "OK"
           }
         }
+      },
+      "get": {
+        "tags": [
+          "CustodyTransfers"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/v1/custody-transfers/{id}/accept": {
