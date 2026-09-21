@@ -97,7 +97,7 @@ var custodios = custodians.Where(c => c.Role == CustodianRole.Custodio).ToList()
     events.Add(created);
     prevHash = created.Hash;
 
-    var transferPairs = rng.Next(3, 7); // de 3 a 6 transferencias completas
+    var transferPairs = rng.Next(3, 6); // de 3 a 5 transferencias completas
 
     for (int p = 0; p < transferPairs; p++)
     {
