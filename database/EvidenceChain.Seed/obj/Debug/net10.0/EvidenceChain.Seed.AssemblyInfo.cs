@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EvidenceChain.Seed")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+afdd4642b607dbbd5d84a51a0a062d7979cfea0f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96916888589ccfce67cdc0def4334f751890a24d")]
 [assembly: System.Reflection.AssemblyProductAttribute("EvidenceChain.Seed")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EvidenceChain.Seed")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

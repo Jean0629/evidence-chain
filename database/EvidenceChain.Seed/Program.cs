@@ -116,7 +116,7 @@ var custodios = custodians.Where(c => c.Role == CustodianRole.Custodio).ToList()
         };
         transfers.Add(transfer);
 
-        var requested = CustodyEvent.Create(evidence.Id, CustodyEventType.TransferRequested, requestedBy.Id, occurredAt, prevHash);
+        var requested = CustodyEvent.Create(evidence.Id, CustodyEventType.TransferRequested, requestedBy.Id, occurredAt, prevHash, transfer.Id);
         events.Add(requested);
         prevHash = requested.Hash;
 
@@ -128,7 +128,7 @@ var custodios = custodians.Where(c => c.Role == CustodianRole.Custodio).ToList()
 
         var resolutionEvent = CustodyEvent.Create(evidence.Id,
             accepted ? CustodyEventType.TransferAccepted : CustodyEventType.TransferRejected,
-            to.Id, resolvedAt, prevHash);
+            to.Id, resolvedAt, prevHash, transfer.Id);
         events.Add(resolutionEvent);
         prevHash = resolutionEvent.Hash;
 
@@ -176,7 +176,6 @@ var ev3 = new Evidence
 };
 var createdEv3 = CustodyEvent.Create(ev3.Id, CustodyEventType.Created, investigadores[0].Id, ev3.CreatedAtUtc, EventHasher.Genesis);
 var requestedAt = DateTime.UtcNow.AddDays(-5);
-var requestedEv3 = CustodyEvent.Create(ev3.Id, CustodyEventType.TransferRequested, custodianA.Id, requestedAt, createdEv3.Hash);
 var expiredTransfer = new CustodyTransfer
 {
     Id = Guid.NewGuid(),
@@ -186,6 +185,7 @@ var expiredTransfer = new CustodyTransfer
     Status = TransferStatus.Pending,
     RequestedAtUtc = requestedAt
 };
+var requestedEv3 = CustodyEvent.Create(ev3.Id, CustodyEventType.TransferRequested, custodianA.Id, requestedAt, createdEv3.Hash, expiredTransfer.Id);
 
 db.Evidences.Add(ev3);
 db.CustodyEvents.AddRange(createdEv3, requestedEv3);
@@ -238,19 +238,20 @@ if (pairsNeeded > 0)
         var requestedBy = investigadores[rng.Next(investigadores.Count)];
 
         var occurredAt = lastEvent.OccurredAtUtc.AddHours(1);
-        var requested = CustodyEvent.Create(evidence.Id, CustodyEventType.TransferRequested, requestedBy.Id, occurredAt, lastEvent.Hash);
+        var newTransferId = Guid.NewGuid();
+        var requested = CustodyEvent.Create(evidence.Id, CustodyEventType.TransferRequested, requestedBy.Id, occurredAt, lastEvent.Hash, newTransferId);
         db.CustodyEvents.Add(requested);
 
         var resolvedAt = occurredAt.AddHours(rng.Next(1, 40));
         var accepted = rng.NextDouble() < 0.85;
         var resolutionEvent = CustodyEvent.Create(evidence.Id,
             accepted ? CustodyEventType.TransferAccepted : CustodyEventType.TransferRejected,
-            to.Id, resolvedAt, requested.Hash);
+            to.Id, resolvedAt, requested.Hash, newTransferId);
         db.CustodyEvents.Add(resolutionEvent);
 
         db.CustodyTransfers.Add(new CustodyTransfer
         {
-            Id = Guid.NewGuid(),
+            Id = newTransferId,
             EvidenceId = evidence.Id,
             FromCustodianId = current.Id,
             ToCustodianId = to.Id,
@@ -291,12 +292,13 @@ if (remaining > 0)
         var requestedBy = investigadores[rng.Next(investigadores.Count)];
         var fillRequestedAt = DateTime.UtcNow.AddHours(-rng.Next(1, 6));
 
-        var requested = CustodyEvent.Create(ev.Id, CustodyEventType.TransferRequested, requestedBy.Id, requestedAt, lastEvent.Hash);
+        var newTransferId = Guid.NewGuid();
+        var requested = CustodyEvent.Create(ev.Id, CustodyEventType.TransferRequested, requestedBy.Id, fillRequestedAt, lastEvent.Hash, newTransferId);
         db.CustodyEvents.Add(requested);
 
         db.CustodyTransfers.Add(new CustodyTransfer
         {
-            Id = Guid.NewGuid(),
+            Id = newTransferId,
             EvidenceId = ev.Id,
             FromCustodianId = current.Id,
             ToCustodianId = to.Id,
