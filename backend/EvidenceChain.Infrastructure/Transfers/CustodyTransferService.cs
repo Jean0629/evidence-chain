@@ -46,7 +46,7 @@ namespace EvidenceChain.Infrastructure.Transfers
             var prevHash = lastEvent?.Hash ?? EventHasher.Genesis;
 
             db.CustodyEvents.Add(CustodyEvent.Create(
-                request.EvidenceId, CustodyEventType.TransferRequested, requestedByCustodianId, transfer.RequestedAtUtc, prevHash));
+                request.EvidenceId, CustodyEventType.TransferRequested, requestedByCustodianId, transfer.RequestedAtUtc, prevHash, transfer.Id));
 
             await db.SaveChangesAsync();
 
@@ -119,7 +119,7 @@ namespace EvidenceChain.Infrastructure.Transfers
                 var prevHash = lastEvent?.Hash ?? EventHasher.Genesis;
                 var actorId = transfer.ToCustodianId;
 
-                db.CustodyEvents.Add(CustodyEvent.Create(transfer.EvidenceId, eventType, actorId, DateTime.UtcNow, prevHash));
+                db.CustodyEvents.Add(CustodyEvent.Create(transfer.EvidenceId, eventType, actorId, DateTime.UtcNow, prevHash, transfer.Id));
 
                 await db.SaveChangesAsync();
             }

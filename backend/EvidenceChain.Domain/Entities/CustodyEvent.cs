@@ -18,7 +18,7 @@ namespace EvidenceChain.Domain.Entities
         public string PreviousHash { get; set; } = default!;
         public string Hash { get; set; } = default!;
 
-        public static CustodyEvent Create(Guid evidenceId, CustodyEventType type, Guid actorId, DateTime occurredAtUtc, string previousHash)
+        public static CustodyEvent Create(Guid evidenceId, CustodyEventType type, Guid actorId, DateTime occurredAtUtc, string previousHash, Guid? relatedTransferId = null)
         {
             var hash = EventHasher.ComputeHash(evidenceId, type.ToString(), actorId, occurredAtUtc, previousHash);
             return new CustodyEvent
@@ -27,6 +27,7 @@ namespace EvidenceChain.Domain.Entities
                 EvidenceId = evidenceId,
                 Type = type,
                 ActorId = actorId,
+                RelatedTransferId = relatedTransferId,
                 OccurredAtUtc = occurredAtUtc,
                 PreviousHash = previousHash,
                 Hash = hash

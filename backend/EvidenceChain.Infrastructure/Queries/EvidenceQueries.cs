@@ -119,9 +119,11 @@ namespace EvidenceChain.Infrastructure.Queries
         {
             return await db.CustodyEvents
                 .Include(x => x.Actor)
+                .Include(x => x.RelatedTransfer)
+                .ThenInclude(t => t!.ToCustodian)
                 .Where(x => x.EvidenceId == evidenceId)
                 .OrderBy(x => x.OccurredAtUtc).ThenBy(x => x.Id)
-                .Select(x => new CustodyEventDto(x.Id, x.Type.ToString(), x.Actor.DisplayName, x.OccurredAtUtc, x.Hash, x.PreviousHash))
+                .Select(x => new CustodyEventDto(x.Id, x.Type.ToString(), x.Actor.DisplayName, x.OccurredAtUtc, x.Hash, x.PreviousHash, x.Type == CustodyEventType.TransferRequested ? x.RelatedTransfer!.ToCustodian.DisplayName : null))
                 .ToListAsync();
         }
     }
