@@ -3,6 +3,8 @@ using EvidenceChain.Domain.Services;
 using EvidenceChain.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Globalization;
+using System.Text;
 
 var config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
@@ -25,18 +27,41 @@ await db.SaveChangesAsync();
 // Semilla fija
 var rng = new Random(1234);
 
+// ---------- 0. LoginCode ----------
+static string ToLoginCode(string displayName, HashSet<string> usedCodes)
+{
+    var normalized = displayName
+        .Normalize(NormalizationForm.FormD)
+        .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+        .ToArray();
+    var withoutAccents = new string(normalized);
+    var parts = withoutAccents.ToLowerInvariant().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+    var baseCode = string.Join(".", parts);
+
+    var code = baseCode;
+    var suffix = 1;
+    while (!usedCodes.Add(code))
+    {
+        code = $"{baseCode}{suffix}";
+        suffix++;
+    }
+    return code;
+}
+
 // ---------- 1. Custodios ----------
 var names = new[] { "Jane Doe", "Richard Roe", "John Smith", "John Doe", "Juan Perez",
     "Luis Gonzalez", "Jose Rodriguez", "Miguel Gomez", "Jorge Fernandez", "Juan Lopez",
     "Sergio Loo", "Marta Delgado", "Tomás Reyes", "Lucía Farfán", "Andrés Cano",
-    "Diego Martinez" };
+    "Diego Martinez", "Juan Perez" };
 var roles = new[] { CustodianRole.Investigador, CustodianRole.Custodio, CustodianRole.Supervisor };
 
+var usedLoginCodes = new HashSet<string>();
 var custodians = names.Select((n, i) => new Custodian
 {
     Id = Guid.NewGuid(),
     DisplayName = n,
-    Role = roles[i % roles.Length]
+    Role = roles[i % roles.Length],
+    LoginCode = ToLoginCode(n, usedLoginCodes)
 }).ToList();
 
 db.Custodians.AddRange(custodians);
@@ -45,7 +70,11 @@ Console.WriteLine($"{custodians.Count} custodios creados.");
 
 var baseDate = DateTime.UtcNow.AddDays(-180);
 
+var investigadores = custodians.Where(c => c.Role == CustodianRole.Investigador).ToList();
+var custodios = custodians.Where(c => c.Role == CustodianRole.Custodio).ToList();
+
 // ---------- 2. Función para evidencia "normal" ----------
+
 (Evidence evidence, List<CustodyEvent> events, List<CustodyTransfer> transfers) GenerateEvidence(int index)
 {
     var evidence = new Evidence
@@ -59,7 +88,7 @@ var baseDate = DateTime.UtcNow.AddDays(-180);
     var events = new List<CustodyEvent>();
     var transfers = new List<CustodyTransfer>();
 
-    var current = custodians[rng.Next(custodians.Count)];
+    var current = custodios[rng.Next(custodios.Count)];
     var occurredAt = evidence.CreatedAtUtc;
     var prevHash = EventHasher.Genesis;
 
@@ -67,13 +96,13 @@ var baseDate = DateTime.UtcNow.AddDays(-180);
     events.Add(created);
     prevHash = created.Hash;
 
-    var targetEvents = rng.Next(8, 13); // ~10 en promedio
-    var count = 1;
+    var transferPairs = rng.Next(3, 7); // de 3 a 6 transferencias completas
 
-    while (count < targetEvents)
+    for (int p = 0; p < transferPairs; p++)
     {
         occurredAt = occurredAt.AddHours(rng.Next(4, 72));
-        var to = custodians.Where(c => c.Id != current.Id).ElementAt(rng.Next(custodians.Count - 1));
+        var to = custodios.Where(c => c.Id != current.Id).ElementAt(rng.Next(custodios.Count - 1));
+        var requestedBy = investigadores[rng.Next(investigadores.Count)];
 
         var transfer = new CustodyTransfer
         {
@@ -86,12 +115,9 @@ var baseDate = DateTime.UtcNow.AddDays(-180);
         };
         transfers.Add(transfer);
 
-        var requested = CustodyEvent.Create(evidence.Id, CustodyEventType.TransferRequested, current.Id, occurredAt, prevHash);
+        var requested = CustodyEvent.Create(evidence.Id, CustodyEventType.TransferRequested, requestedBy.Id, occurredAt, prevHash);
         events.Add(requested);
         prevHash = requested.Hash;
-        count++;
-
-        if (count >= targetEvents) break; // queda pendiente
 
         var resolvedAt = occurredAt.AddHours(rng.Next(1, 40));
         var accepted = rng.NextDouble() < 0.85;
@@ -104,7 +130,6 @@ var baseDate = DateTime.UtcNow.AddDays(-180);
             to.Id, resolvedAt, prevHash);
         events.Add(resolutionEvent);
         prevHash = resolutionEvent.Hash;
-        count++;
 
         if (accepted) current = to;
         occurredAt = resolvedAt;
@@ -184,6 +209,103 @@ for (int i = 4; i <= 1000; i++)
     }
 }
 await db.SaveChangesAsync();
+
+// ---------- 5. Llegar a los 10000 eventos ----------
+var currentTotal = await db.CustodyEvents.CountAsync();
+var deficit = 10000 - currentTotal;
+var pairsNeeded = deficit / 2;
+
+Console.WriteLine($"Total actual: {currentTotal}. Agregando {pairsNeeded} pares de transferencia adicionales...");
+
+if (pairsNeeded > 0)
+{
+    var candidateEvidences = await db.Evidences
+        .Where(e => e.Code != "EV-0001" && e.Code != "EV-0002" && e.Code != "EV-0003")
+        .OrderBy(e => e.Code)
+        .Take(pairsNeeded)
+        .ToListAsync();
+
+    foreach (var evidence in candidateEvidences)
+    {
+        var lastEvent = await db.CustodyEvents
+            .Where(e => e.EvidenceId == evidence.Id)
+            .OrderByDescending(e => e.OccurredAtUtc).ThenByDescending(e => e.Id)
+            .FirstAsync();
+
+        var current = await db.Custodians.FirstAsync(c => c.Id == evidence.CurrentCustodianId);
+        var to = custodios.Where(c => c.Id != current.Id).ElementAt(rng.Next(custodios.Count - 1));
+        var requestedBy = investigadores[rng.Next(investigadores.Count)];
+
+        var occurredAt = lastEvent.OccurredAtUtc.AddHours(1);
+        var requested = CustodyEvent.Create(evidence.Id, CustodyEventType.TransferRequested, requestedBy.Id, occurredAt, lastEvent.Hash);
+        db.CustodyEvents.Add(requested);
+
+        var resolvedAt = occurredAt.AddHours(rng.Next(1, 40));
+        var accepted = rng.NextDouble() < 0.85;
+        var resolutionEvent = CustodyEvent.Create(evidence.Id,
+            accepted ? CustodyEventType.TransferAccepted : CustodyEventType.TransferRejected,
+            to.Id, resolvedAt, requested.Hash);
+        db.CustodyEvents.Add(resolutionEvent);
+
+        db.CustodyTransfers.Add(new CustodyTransfer
+        {
+            Id = Guid.NewGuid(),
+            EvidenceId = evidence.Id,
+            FromCustodianId = current.Id,
+            ToCustodianId = to.Id,
+            Status = accepted ? TransferStatus.Accepted : TransferStatus.Rejected,
+            RequestedAtUtc = occurredAt,
+            ResolvedAtUtc = resolvedAt
+        });
+
+        if (accepted)
+        {
+            evidence.CurrentCustodianId = to.Id;
+        }
+    }
+
+    await db.SaveChangesAsync();
+}
+
+var totalAfterPairs = await db.CustodyEvents.CountAsync();
+var remaining = 10000 - totalAfterPairs;
+
+if (remaining > 0)
+{
+    var evidence = await db.Evidences
+        .Where(e => e.Code != "EV-0001" && e.Code != "EV-0002" && e.Code != "EV-0003")
+        .OrderByDescending(e => e.Code)
+        .Take(remaining)
+        .ToListAsync();
+
+    foreach (var ev in evidence)
+    {
+        var lastEvent = await db.CustodyEvents
+            .Where(e => e.EvidenceId == ev.Id)
+            .OrderByDescending(e => e.OccurredAtUtc).ThenByDescending(e => e.Id)
+            .FirstAsync();
+
+        var current = await db.Custodians.FirstAsync(c => c.Id == ev.CurrentCustodianId);
+        var to = custodios.Where(c => c.Id != current.Id).ElementAt(rng.Next(custodios.Count - 1));
+        var requestedBy = investigadores[rng.Next(investigadores.Count)];
+        var fillRequestedAt = DateTime.UtcNow.AddHours(-rng.Next(1, 6));
+
+        var requested = CustodyEvent.Create(ev.Id, CustodyEventType.TransferRequested, requestedBy.Id, requestedAt, lastEvent.Hash);
+        db.CustodyEvents.Add(requested);
+
+        db.CustodyTransfers.Add(new CustodyTransfer
+        {
+            Id = Guid.NewGuid(),
+            EvidenceId = ev.Id,
+            FromCustodianId = current.Id,
+            ToCustodianId = to.Id,
+            Status = TransferStatus.Pending,
+            RequestedAtUtc = fillRequestedAt
+        });
+    }
+
+    await db.SaveChangesAsync();
+}
 
 var totalEvents = await db.CustodyEvents.CountAsync();
 var totalEvidences = await db.Evidences.CountAsync();

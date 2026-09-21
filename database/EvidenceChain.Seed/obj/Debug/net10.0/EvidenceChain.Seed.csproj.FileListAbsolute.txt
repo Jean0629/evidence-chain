@@ -91,3 +91,4 @@ C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\database\EvidenceChai
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\database\EvidenceChain.Seed\obj\Debug\net10.0\ref\EvidenceChain.Seed.dll
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\database\EvidenceChain.Seed\bin\Debug\net10.0\appsettings.json
 C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\database\EvidenceChain.Seed\bin\Debug\net10.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+C:\Users\charli.ramirez\Documents\Proyectos\evidence-chain\database\EvidenceChain.Seed\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
