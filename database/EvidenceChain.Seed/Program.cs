@@ -82,7 +82,7 @@ var custodios = custodians.Where(c => c.Role == CustodianRole.Custodio).ToList()
         Id = Guid.NewGuid(),
         Code = $"EV-{index:D4}",
         Description = $"Evidencia digital recolectada para el caso #{index}",
-        CreatedAtUtc = baseDate.AddHours(rng.Next(0, 180 * 24))
+        CreatedAtUtc = baseDate.AddHours(rng.Next(0, 140 * 24))
     };
 
     var events = new List<CustodyEvent>();
