@@ -89,10 +89,11 @@ var custodios = custodians.Where(c => c.Role == CustodianRole.Custodio).ToList()
     var transfers = new List<CustodyTransfer>();
 
     var current = custodios[rng.Next(custodios.Count)];
+    var registeredBy = investigadores[rng.Next(investigadores.Count)];
     var occurredAt = evidence.CreatedAtUtc;
     var prevHash = EventHasher.Genesis;
 
-    var created = CustodyEvent.Create(evidence.Id, CustodyEventType.Created, current.Id, occurredAt, prevHash);
+    var created = CustodyEvent.Create(evidence.Id, CustodyEventType.Created, registeredBy.Id, occurredAt, prevHash);
     events.Add(created);
     prevHash = created.Hash;
 
@@ -173,7 +174,7 @@ var ev3 = new Evidence
     CreatedAtUtc = DateTime.UtcNow.AddDays(-10),
     CurrentCustodianId = custodianA.Id
 };
-var createdEv3 = CustodyEvent.Create(ev3.Id, CustodyEventType.Created, custodianA.Id, ev3.CreatedAtUtc, EventHasher.Genesis);
+var createdEv3 = CustodyEvent.Create(ev3.Id, CustodyEventType.Created, investigadores[0].Id, ev3.CreatedAtUtc, EventHasher.Genesis);
 var requestedAt = DateTime.UtcNow.AddDays(-5);
 var requestedEv3 = CustodyEvent.Create(ev3.Id, CustodyEventType.TransferRequested, custodianA.Id, requestedAt, createdEv3.Hash);
 var expiredTransfer = new CustodyTransfer
