@@ -28,6 +28,10 @@ public class EvidenceChainDbContext : DbContext
         modelBuilder.Entity<Evidence>()
             .HasIndex(x => new { x.CurrentCustodianId, x.CreatedAtUtc });
 
+        modelBuilder.Entity<Evidence>()
+            .HasIndex(e => new { e.CreatedAtUtc, e.Id })
+            .IncludeProperties(e => new { e.CurrentCustodianId, e.Description, e.Code });
+
         modelBuilder.Entity<CustodyTransfer>()
             .HasOne(x => x.FromCustodian)
             .WithMany()
