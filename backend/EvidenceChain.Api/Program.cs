@@ -73,7 +73,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddCors(options =>
     options.AddPolicy("Frontend", policy => policy
-        .WithOrigins(builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? ["http://localhost:5173"])
+        .WithOrigins(builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? ["http://localhost:5173", "https://evidencechainweb.vercel.app"])
         .AllowAnyHeader()
         .AllowAnyMethod()
         .WithExposedHeaders("ETag")));
