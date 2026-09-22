@@ -4,4 +4,5 @@
   <Project Path="EvidenceChain.Application/EvidenceChain.Application.csproj" />
   <Project Path="EvidenceChain.Domain/EvidenceChain.Domain.csproj" />
   <Project Path="EvidenceChain.Infrastructure/EvidenceChain.Infrastructure.csproj" />
+  <Project Path="EvidenceChain.Tests/EvidenceChain.Tests.csproj" />
 </Solution>
