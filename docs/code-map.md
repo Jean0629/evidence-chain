@@ -12,4 +12,4 @@
 | Autenticación y roles | `backend/EvidenceChain.Infrastructure/Auth/TokenService.cs`, atributos `[Authorize(Roles = "...")]` en los controllers | `POST /api/v1/auth/login`; header `Authorization: Bearer` en el resto de endpoints |
 | Filtros de URL y cancelación de solicitudes | `frontend/src/features/evidence-list/` (hook de bandeja sobre `useSearchParams` + React Query) | Página `/evidence` |
 | Actualización optimista y manejo de 409 | `frontend/src/features/custody-transfer/` (hook de mutación con `onMutate`/`onError`) | Modal de transferencia, y acciones de aceptar/rechazar en el detalle de evidencia |
-| Pruebas automatizadas | `backend/EvidenceChain.Tests/` (`ChainVerificationTests.cs`, `IdempotencyTests.cs`, `ConcurrencyTests.cs`) | `dotnet test backend/EvidenceChain.sln` |
+| Pruebas automatizadas | `backend/EvidenceChain.Tests/` (`ChainVerificationTests.cs`, `IdempotencyTests.cs`, `ConcurrencyTests.cs`) | `dotnet test backend/EvidenceChain.slnx` |

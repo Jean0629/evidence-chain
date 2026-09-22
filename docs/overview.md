@@ -41,7 +41,7 @@ npm install
 npm run dev
 
 # Tests de backend
-dotnet test backend/EvidenceChain.sln
+dotnet test backend/EvidenceChain.slnx
 ```
 
 La API expone Swagger en `/swagger` para probar los endpoints con el botón "Authorize" (pegar `Bearer <token>` obtenido de `POST /api/v1/auth/login`).
