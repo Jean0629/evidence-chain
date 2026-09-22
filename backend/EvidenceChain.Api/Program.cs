@@ -1,3 +1,4 @@
+using EvidenceChain.Api.Filters;
 using EvidenceChain.Application.Auth;
 using EvidenceChain.Application.Custodians;
 using EvidenceChain.Application.Evidence;
@@ -36,6 +37,8 @@ builder.Services.AddSwaggerGen(options =>
     {
         [new OpenApiSecuritySchemeReference("Bearer", document)] = []
     });
+
+    options.OperationFilter<AuthorizeCheckOperationFilter>();
 });
 
 
@@ -83,6 +86,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.MapGet("/", () => Results.Redirect("/swagger"));
 }
 
 app.UseHttpsRedirection();

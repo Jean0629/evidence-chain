@@ -1,4 +1,6 @@
-﻿using EvidenceChain.Application.Custodians;
+﻿using EvidenceChain.Application.Auth;
+using EvidenceChain.Application.Custodians;
+using EvidenceChain.Application.DTOs;
 using EvidenceChain.Infrastructure;
 using EvidenceChain.Infrastructure.Queries;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +14,7 @@ namespace EvidenceChain.Api.Controllers
     [Route("api/v1/custodians")]
     [ApiController]
     [Authorize]
+    [ProducesResponseType(typeof(List<CustodianSummaryDto>), StatusCodes.Status200OK)]
     public class CustodiansController(ICustodianQueries custodianQueries) : ControllerBase
     {
         [HttpGet]

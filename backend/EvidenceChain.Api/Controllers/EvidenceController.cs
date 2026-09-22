@@ -1,4 +1,5 @@
-﻿using EvidenceChain.Application.Evidence;
+﻿using EvidenceChain.Application.DTOs;
+using EvidenceChain.Application.Evidence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,7 @@ namespace EvidenceChain.Api.Controllers
     public class EvidenceController(IEvidenceQueries evidenceQueries, IChainVerification chainVerification) : ControllerBase
     {
         [HttpGet]
+        [ProducesResponseType(typeof(EvidencePageDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPage([FromQuery] string? search, [FromQuery] Guid? custodianId, [FromQuery] string? cursor, [FromQuery] string? sort)
         {
             var order = string.Equals(sort, "asc", StringComparison.OrdinalIgnoreCase)
@@ -23,6 +25,7 @@ namespace EvidenceChain.Api.Controllers
         }
 
         [HttpGet("{id}/chain/verify")]
+        [ProducesResponseType(typeof(ChainVerifyResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> VerifyChain(Guid id)
         {
             var result = await chainVerification.VerifyAsync(id);
@@ -30,6 +33,8 @@ namespace EvidenceChain.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(EvidenceDetailDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(Guid id)
         {
             var result = await evidenceQueries.GetByIdAsync(id);
@@ -37,6 +42,7 @@ namespace EvidenceChain.Api.Controllers
         }
 
         [HttpGet("{id}/chain")]
+        [ProducesResponseType(typeof(List<CustodyEventDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetChain(Guid id)
         {
             var result = await evidenceQueries.GetChainAsync(id);

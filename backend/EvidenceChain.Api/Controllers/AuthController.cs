@@ -1,5 +1,6 @@
 ﻿using EvidenceChain.Application.Auth;
 using EvidenceChain.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,9 @@ namespace EvidenceChain.Api.Controllers
     public class AuthController(EvidenceChainDbContext db, ITokenService tokenService) : ControllerBase
     {
         [HttpPost("login")]
+        [AllowAnonymous]
+        [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var custodian = await db.Custodians

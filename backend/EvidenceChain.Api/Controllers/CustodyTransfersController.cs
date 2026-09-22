@@ -15,23 +15,24 @@ namespace EvidenceChain.Api.Controllers
     {
         [HttpPost]
         [Authorize(Roles = "Investigador")]
-        public async Task<IActionResult> Create([FromBody] CreateTransferRequestDto request)
+        [ProducesResponseType(typeof(TransferResponseDto), StatusCodes.Status201Created)]
+        public async Task<IActionResult> Create([FromBody] CreateTransferRequestDto request, [FromHeader(Name = "Idempotency-Key")] string idempotencyKey)
         {
-            if (!Request.Headers.TryGetValue("Idempotency-Key", out var key) || string.IsNullOrWhiteSpace(key))
+            if (string.IsNullOrWhiteSpace(idempotencyKey))
                 return Problem(title: "Falta el header Idempotency-Key", statusCode: 400);
 
             var requestedBy = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            var result = await service.CreateAsync(request, key!, requestedBy);
+            var result = await service.CreateAsync(request, idempotencyKey, requestedBy);
             Response.Headers.ETag = result.ETag;
             return CreatedAtAction(nameof(Create), new { id = result.Id }, result);
         }
 
         [HttpPost("{id}/accept")]
         [Authorize(Roles = "Custodio")]
-        public async Task<IActionResult> Accept(Guid id)
+        [ProducesResponseType(typeof(TransferResponseDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Accept(Guid id, [FromHeader(Name = "If-Match")] string ifMatch)
         {
-            var ifMatch = Request.Headers.IfMatch.ToString();
             if (string.IsNullOrWhiteSpace(ifMatch))
                 return Problem(title: "Falta el header If-Match", statusCode: 400);
 
@@ -43,9 +44,9 @@ namespace EvidenceChain.Api.Controllers
 
         [HttpPost("{id}/reject")]
         [Authorize(Roles = "Custodio")]
-        public async Task<IActionResult> Reject(Guid id)
+        [ProducesResponseType(typeof(TransferResponseDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Reject(Guid id, [FromHeader(Name = "If-Match")] string ifMatch)
         {
-            var ifMatch = Request.Headers.IfMatch.ToString();
             if (string.IsNullOrWhiteSpace(ifMatch))
                 return Problem(title: "Falta el header If-Match", statusCode: 400);
 
@@ -57,6 +58,7 @@ namespace EvidenceChain.Api.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Custodio")]
+        [ProducesResponseType(typeof(List<MyPendingTransferDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetPending()
         {
             var currentUserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
