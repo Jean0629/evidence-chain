@@ -1,0 +1,560 @@
+---
+openapi: "3.0.4"
+info: 
+  title: "EvidenceChain.Api"
+  version: "1.0"
+paths: 
+  /api/v1/auth/login: 
+    post: 
+      tags: 
+      - "Auth"
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/LoginRequest"
+          text/json: 
+            schema: 
+              $ref: "#/components/schemas/LoginRequest"
+          application/*+json: 
+            schema: 
+              $ref: "#/components/schemas/LoginRequest"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/LoginResponse"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/LoginResponse"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/LoginResponse"
+        404: 
+          description: "Not Found"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/ProblemDetails"
+      security: 
+  /api/v1/custodians: 
+    get: 
+      tags: 
+      - "Custodians"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/CustodianSummaryDto"
+            application/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/CustodianSummaryDto"
+            text/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/CustodianSummaryDto"
+  /api/v1/custody-transfers: 
+    post: 
+      tags: 
+      - "CustodyTransfers"
+      parameters: 
+      - name: "Idempotency-Key"
+        in: "header"
+        schema: 
+          type: "string"
+      requestBody: 
+        content: 
+          application/json: 
+            schema: 
+              $ref: "#/components/schemas/CreateTransferRequestDto"
+          text/json: 
+            schema: 
+              $ref: "#/components/schemas/CreateTransferRequestDto"
+          application/*+json: 
+            schema: 
+              $ref: "#/components/schemas/CreateTransferRequestDto"
+      responses: 
+        201: 
+          description: "Created"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+    get: 
+      tags: 
+      - "CustodyTransfers"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/MyPendingTransferDto"
+            application/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/MyPendingTransferDto"
+            text/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/MyPendingTransferDto"
+  /api/v1/custody-transfers/{id}/accept: 
+    post: 
+      tags: 
+      - "CustodyTransfers"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: "true"
+        schema: 
+          type: "string"
+          format: "uuid"
+      - name: "If-Match"
+        in: "header"
+        schema: 
+          type: "string"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+  /api/v1/custody-transfers/{id}/reject: 
+    post: 
+      tags: 
+      - "CustodyTransfers"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: "true"
+        schema: 
+          type: "string"
+          format: "uuid"
+      - name: "If-Match"
+        in: "header"
+        schema: 
+          type: "string"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/TransferResponseDto"
+  /api/v1/evidence: 
+    get: 
+      tags: 
+      - "Evidence"
+      parameters: 
+      - name: "search"
+        in: "query"
+        schema: 
+          type: "string"
+      - name: "custodianId"
+        in: "query"
+        schema: 
+          type: "string"
+          format: "uuid"
+      - name: "cursor"
+        in: "query"
+        schema: 
+          type: "string"
+      - name: "sort"
+        in: "query"
+        schema: 
+          type: "string"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/EvidencePageDto"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/EvidencePageDto"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/EvidencePageDto"
+  /api/v1/evidence/{id}/chain/verify: 
+    get: 
+      tags: 
+      - "Evidence"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: "true"
+        schema: 
+          type: "string"
+          format: "uuid"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/ChainVerifyResult"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/ChainVerifyResult"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/ChainVerifyResult"
+  /api/v1/evidence/{id}: 
+    get: 
+      tags: 
+      - "Evidence"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: "true"
+        schema: 
+          type: "string"
+          format: "uuid"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/EvidenceDetailDto"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/EvidenceDetailDto"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/EvidenceDetailDto"
+        404: 
+          description: "Not Found"
+          content: 
+            text/plain: 
+              schema: 
+                $ref: "#/components/schemas/ProblemDetails"
+            application/json: 
+              schema: 
+                $ref: "#/components/schemas/ProblemDetails"
+            text/json: 
+              schema: 
+                $ref: "#/components/schemas/ProblemDetails"
+  /api/v1/evidence/{id}/chain: 
+    get: 
+      tags: 
+      - "Evidence"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: "true"
+        schema: 
+          type: "string"
+          format: "uuid"
+      responses: 
+        200: 
+          description: "OK"
+          content: 
+            text/plain: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/CustodyEventDto"
+            application/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/CustodyEventDto"
+            text/json: 
+              schema: 
+                type: "array"
+                items: 
+                  $ref: "#/components/schemas/CustodyEventDto"
+components: 
+  schemas: 
+    ChainVerifyResult: 
+      type: "object"
+      properties: 
+        isValid: 
+          type: "boolean"
+        firstInvalidEventId: 
+          type: "string"
+          format: "uuid"
+          nullable: "true"
+      additionalProperties: "false"
+    CreateTransferRequestDto: 
+      type: "object"
+      properties: 
+        evidenceId: 
+          type: "string"
+          format: "uuid"
+        toCustodianId: 
+          type: "string"
+          format: "uuid"
+      additionalProperties: "false"
+    CustodianSummaryDto: 
+      type: "object"
+      properties: 
+        id: 
+          type: "string"
+          format: "uuid"
+        displayName: 
+          type: "string"
+          nullable: "true"
+        role: 
+          type: "string"
+          nullable: "true"
+        loginCode: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    CustodyEventDto: 
+      type: "object"
+      properties: 
+        id: 
+          type: "string"
+          format: "uuid"
+        type: 
+          type: "string"
+          nullable: "true"
+        actorName: 
+          type: "string"
+          nullable: "true"
+        occurredAtUtc: 
+          type: "string"
+          format: "date-time"
+        hash: 
+          type: "string"
+          nullable: "true"
+        previousHash: 
+          type: "string"
+          nullable: "true"
+        toCustodianName: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    EvidenceDetailDto: 
+      type: "object"
+      properties: 
+        id: 
+          type: "string"
+          format: "uuid"
+        code: 
+          type: "string"
+          nullable: "true"
+        description: 
+          type: "string"
+          nullable: "true"
+        currentCustodianId: 
+          type: "string"
+          format: "uuid"
+        currentCustodianName: 
+          type: "string"
+          nullable: "true"
+        createdAtUtc: 
+          type: "string"
+          format: "date-time"
+        hasAnomaly: 
+          type: "boolean"
+        anomalySeverity: 
+          type: "string"
+          nullable: "true"
+        anomalyReason: 
+          type: "string"
+          nullable: "true"
+        pendingTransfer: 
+          $ref: "#/components/schemas/PendingTransferDto"
+      additionalProperties: "false"
+    EvidenceListItemDto: 
+      type: "object"
+      properties: 
+        id: 
+          type: "string"
+          format: "uuid"
+        code: 
+          type: "string"
+          nullable: "true"
+        description: 
+          type: "string"
+          nullable: "true"
+        currentCustodianName: 
+          type: "string"
+          nullable: "true"
+        lastEventAtUtc: 
+          type: "string"
+          format: "date-time"
+        hasAnomaly: 
+          type: "boolean"
+        isIntegrityValid: 
+          type: "boolean"
+      additionalProperties: "false"
+    EvidencePageDto: 
+      type: "object"
+      properties: 
+        items: 
+          type: "array"
+          items: 
+            $ref: "#/components/schemas/EvidenceListItemDto"
+          nullable: "true"
+        nextCursor: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    LoginRequest: 
+      type: "object"
+      properties: 
+        loginCode: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    LoginResponse: 
+      type: "object"
+      properties: 
+        token: 
+          type: "string"
+          nullable: "true"
+        custodianId: 
+          type: "string"
+          format: "uuid"
+        displayName: 
+          type: "string"
+          nullable: "true"
+        role: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    MyPendingTransferDto: 
+      type: "object"
+      properties: 
+        id: 
+          type: "string"
+          format: "uuid"
+        evidenceId: 
+          type: "string"
+          format: "uuid"
+        evidenceCode: 
+          type: "string"
+          nullable: "true"
+        fromCustodianName: 
+          type: "string"
+          nullable: "true"
+        requestedAtUtc: 
+          type: "string"
+          format: "date-time"
+        eTag: 
+          type: "string"
+          nullable: "true"
+        isIntegrityValid: 
+          type: "boolean"
+      additionalProperties: "false"
+    PendingTransferDto: 
+      type: "object"
+      properties: 
+        id: 
+          type: "string"
+          format: "uuid"
+        toCustodianId: 
+          type: "string"
+          format: "uuid"
+        toCustodianName: 
+          type: "string"
+          nullable: "true"
+        requestedAtUtc: 
+          type: "string"
+          format: "date-time"
+        eTag: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+    ProblemDetails: 
+      type: "object"
+      properties: 
+        type: 
+          type: "string"
+          nullable: "true"
+        title: 
+          type: "string"
+          nullable: "true"
+        status: 
+          type: "integer"
+          format: "int32"
+          nullable: "true"
+        detail: 
+          type: "string"
+          nullable: "true"
+        instance: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: 
+    TransferResponseDto: 
+      type: "object"
+      properties: 
+        id: 
+          type: "string"
+          format: "uuid"
+        evidenceId: 
+          type: "string"
+          format: "uuid"
+        status: 
+          type: "string"
+          nullable: "true"
+        fromCustodianId: 
+          type: "string"
+          format: "uuid"
+        toCustodianId: 
+          type: "string"
+          format: "uuid"
+        requestedAtUtc: 
+          type: "string"
+          format: "date-time"
+        eTag: 
+          type: "string"
+          nullable: "true"
+      additionalProperties: "false"
+  securitySchemes: 
+    Bearer: 
+      type: "http"
+      description: "JWT Authorization header usando el esquema Bearer. Ejemplo: "Bearer {token}""
+      scheme: "Bearer"
+security: 
+-
+  Bearer: 
+tags: 
+- name: "Auth"
+- name: "Custodians"
+- name: "CustodyTransfers"
+- name: "Evidence"
