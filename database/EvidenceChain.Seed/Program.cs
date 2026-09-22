@@ -164,8 +164,8 @@ await db.SaveChangesAsync();
 Console.WriteLine($"  EV-0002 (evento alterado) — evento {tampered.Id} manipulado sin recalcular hash");
 
 // EV-0003: transferencia vencida
-var custodianA = custodians[0];
-var custodianB = custodians[1];
+var custodianA = custodios[0];
+var custodianB = custodios[1];
 var ev3 = new Evidence
 {
     Id = Guid.NewGuid(),
