@@ -6,7 +6,6 @@ const dateTimeFormat = new Intl.DateTimeFormat('es-PE', {
 })
 
 export function formatDateTime(iso: string): string {
-  // El backend puede serializar DateTime UTC sin sufijo "Z"; se fuerza UTC.
   const date = new Date(/(Z|[+-]\d{2}:\d{2})$/.test(iso) ? iso : `${iso}Z`)
   return Number.isNaN(date.getTime()) ? iso : dateTimeFormat.format(date)
 }
@@ -30,7 +29,6 @@ export function transferStatusLabel(status: string | undefined): string {
     : (status ?? 'desconocido')
 }
 
-/** Etiqueta para selectores de custodios; el código de acceso desambigua nombres repetidos. */
 export function custodianOptionLabel(custodian: Custodian): string {
   return `${custodian.displayName} (${custodian.loginCode})`
 }
