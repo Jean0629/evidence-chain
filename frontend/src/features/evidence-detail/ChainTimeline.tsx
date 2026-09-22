@@ -15,7 +15,6 @@ function shortHash(hash: string): string {
 
 interface ChainTimelineProps {
   events: CustodyEvent[]
-  /** Evento donde la verificación detectó la primera inconsistencia. */
   invalidEventId: string | null
 }
 
@@ -64,7 +63,14 @@ export function ChainTimeline({ events, invalidEventId }: ChainTimelineProps) {
             </div>
             {event.type === 'TransferRequested' ? (
               <p className="text-sm text-slate-600">
-                Solicitada por <span className="font-medium text-slate-800">{event.actorName}</span>
+                por <span className="font-medium text-slate-800">{event.actorName}</span>
+                {event.fromCustodianName && (
+                  <>
+                    {' '}
+                    <span aria-hidden="true">→</span> remitente:{' '}
+                    <span className="font-medium text-slate-800">{event.fromCustodianName}</span>
+                  </>
+                )}
                 {event.toCustodianName && (
                   <>
                     {' '}

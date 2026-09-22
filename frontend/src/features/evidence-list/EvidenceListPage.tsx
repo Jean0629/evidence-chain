@@ -20,8 +20,6 @@ export function EvidenceListPage() {
   const custodians = useCustodians()
   const list = useEvidenceList(params)
 
-  // El texto se edita localmente y se vuelca a la URL con debounce; así cada
-  // pulsación no dispara una búsqueda ni llena el historial del navegador.
   const [searchText, setSearchText] = useState(params.search)
   const [syncedSearch, setSyncedSearch] = useState(params.search)
   if (params.search !== syncedSearch) {
@@ -74,7 +72,8 @@ export function EvidenceListPage() {
             <option value="">Todos</option>
             {custodians.data
               // Los Supervisores son de solo lectura: nunca tienen evidencias en custodia.
-              ?.filter((c) => c.role === 'Investigador' || c.role === 'Custodio')
+              // Los Investigadores no pueden recibir transferencias, así que tampoco tienen evidencias en custodia.
+              ?.filter((c) => c.role === 'Custodio')
               .map((c) => (
                 <option key={c.id} value={c.id}>
                   {custodianOptionLabel(c)}

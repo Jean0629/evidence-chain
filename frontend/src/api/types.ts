@@ -72,6 +72,7 @@ export interface CustodyEvent {
   type: CustodyEventType
   actorName: string
   toCustodianName?: string | null
+  fromCustodianName?: string | null
   occurredAtUtc: string
   hash: string
   previousHash: string

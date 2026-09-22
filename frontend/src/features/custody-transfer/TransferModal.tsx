@@ -22,7 +22,6 @@ export function TransferModal({
   const custodians = useCustodians()
   const [selectedId, setSelectedId] = useState('')
 
-  // Solo los Custodios reciben transferencias; el custodio actual tampoco es un destino válido.
   const options = custodians.data?.filter((c) => c.role === 'Custodio' && c.id !== currentCustodianId) ?? []
   const selected = options.find((c) => c.id === selectedId)
 

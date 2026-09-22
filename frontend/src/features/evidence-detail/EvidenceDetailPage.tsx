@@ -21,7 +21,6 @@ function BackLink() {
     <Link
       to="/evidence"
       onClick={(event) => {
-        // Si venimos de la bandeja, "volver" conserva sus filtros y su cursor.
         const idx = (window.history.state as { idx?: number } | null)?.idx ?? 0
         if (idx > 0) {
           event.preventDefault()
@@ -85,8 +84,6 @@ export function EvidenceDetailPage() {
   const evidence = detail.data
   const pending = evidence.pendingTransfer
   const isInvestigador = role === 'Investigador'
-  // El detalle no expone el id del usuario en sesión, así que se compara por nombre visible;
-  // el backend igualmente responde 403 si el destinatario no coincide.
   const isRecipient = role === 'Custodio' && pending !== null && pending.toCustodianId === custodianId
   const transferBlocked = pending !== null
 
@@ -119,7 +116,7 @@ export function EvidenceDetailPage() {
             <button
               ref={transferButtonRef}
               type="button"
-              // aria-disabled (y no disabled) para que el botón conserve el foco al cerrar el modal.
+              // Para que el botón conserve el foco al cerrar el modal.
               aria-disabled={transferBlocked}
               title={transferBlocked ? 'Ya existe una transferencia pendiente para esta evidencia.' : undefined}
               onClick={openModal}

@@ -4,10 +4,6 @@ import type { EvidenceListParams, SortOrder } from '../../api/types'
 
 type FilterPatch = Partial<Pick<EvidenceListParams, 'search' | 'custodianId' | 'sort'>>
 
-/**
- * Filtros, orden y cursor de la bandeja, persistidos en los query params de la URL
- * para que la vista sea recargable y compartible.
- */
 export function useEvidenceListFilters() {
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -21,7 +17,7 @@ export function useEvidenceListFilters() {
     [searchParams],
   )
 
-  /** Cambiar cualquier filtro u orden descarta el cursor (vuelve a la primera página). */
+  // Cambiar cualquier filtro u orden descarta el cursor
   const setFilters = useCallback(
     (patch: FilterPatch, options?: { replace?: boolean }) => {
       setSearchParams(

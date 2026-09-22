@@ -58,7 +58,6 @@ export function useResolveTransfer(evidenceId: string) {
     resolve: (transfer: PendingTransfer, action: ResolveAction) => mutation.mutate({ transfer, action }),
     reset: mutation.reset,
     isPending: mutation.isPending,
-    /** Acción en curso, para deshabilitar/etiquetar el botón correcto. */
     pendingAction: mutation.isPending ? mutation.variables?.action : undefined,
     result: mutation.data,
     error: mutation.error

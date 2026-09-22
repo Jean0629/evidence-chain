@@ -69,10 +69,10 @@ export function useTransferMutation(evidenceId: string) {
   })
 
   return {
-    /** Nueva intención de transferencia: genera una Idempotency-Key nueva. */
+    // Nueva intención de transferencia: genera una Idempotency-Key nueva
     submit: (toCustodian: Custodian) =>
       mutation.mutate({ toCustodian, idempotencyKey: crypto.randomUUID() }),
-    /** Reintento de la MISMA petición (misma Idempotency-Key), p. ej. tras un error de red. */
+    // Reintento de la MISMA petición (misma Idempotency-Key)
     retry: () => {
       if (mutation.variables) mutation.mutate(mutation.variables)
     },

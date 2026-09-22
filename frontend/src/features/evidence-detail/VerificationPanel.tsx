@@ -29,14 +29,14 @@ export function VerificationPanel({ result, error, isVerifying, onVerify }: Veri
 
         {result && !isVerifying && result.isValid && (
           <p className="rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
-            <span aria-hidden="true">✓</span> Cadena íntegra: todos los hashes coinciden.
+            Cadena íntegra: todos los hashes coinciden.
           </p>
         )}
 
         {result && !isVerifying && !result.isValid && (
           <div className="rounded-md border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-800">
             <p className="font-semibold">
-              <span aria-hidden="true">✗</span> Cadena comprometida
+              Cadena comprometida
             </p>
             {result.reason && <p className="mt-1">{result.reason}</p>}
             {result.firstInvalidEventId && (

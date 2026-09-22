@@ -13,7 +13,6 @@ export function PendingInboxPage() {
   const pending = useMyPendingTransfers()
   const items = pending.data ?? []
 
-  // La bandeja de pendientes existe solo para Custodios (el API responde 403 al resto).
   if (role !== 'Custodio') return <Navigate to="/evidence" replace />
 
   const error = pending.isError ? toApiError(pending.error) : null

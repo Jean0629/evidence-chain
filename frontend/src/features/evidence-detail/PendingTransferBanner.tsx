@@ -4,7 +4,6 @@ import { formatDateTime } from '../../lib/format'
 
 interface PendingTransferBannerProps {
   transfer: PendingTransfer
-  /** true solo para el Custodio destinatario. */
   canResolve: boolean
   pendingAction: ResolveAction | undefined
   onResolve: (action: ResolveAction) => void
