@@ -2,6 +2,7 @@
 using EvidenceChain.Application.Evidence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -25,6 +26,7 @@ namespace EvidenceChain.Api.Controllers
         }
 
         [HttpGet("{id}/chain/verify")]
+        [EnableRateLimiting("chain-verify")]
         [ProducesResponseType(typeof(ChainVerifyResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> VerifyChain(Guid id)
         {

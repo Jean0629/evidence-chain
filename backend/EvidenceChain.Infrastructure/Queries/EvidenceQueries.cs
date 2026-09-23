@@ -9,7 +9,7 @@ using System.Text;
 
 namespace EvidenceChain.Infrastructure.Queries
 {
-    public class EvidenceQueries(EvidenceChainDbContext db, IConfiguration config, IChainVerification chainVerification) : IEvidenceQueries
+    public class EvidenceQueries(EvidenceChainDbContext db, IConfiguration config) : IEvidenceQueries
     {
         public async Task<EvidencePageDto> GetPageAsync(string? search, Guid? custodianId, string? cursor, SortOrder order = SortOrder.Descending, int pageSize = 20)
         {

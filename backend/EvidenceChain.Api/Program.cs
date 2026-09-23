@@ -13,7 +13,9 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using System.Security.Claims;
 using System.Text;
+using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,6 +73,47 @@ builder.Services
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
+builder.Services.AddRateLimiter(options =>
+{
+    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
+        RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: context.Connection.RemoteIpAddress?.ToString() ?? "unknown",
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 100,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            }));
+
+    options.AddPolicy("chain-verify", context =>
+    {
+        var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
+            ?? context.Connection.RemoteIpAddress?.ToString()
+            ?? "unknown";
+
+        return RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: userId,
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 20,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            });
+    });
+
+    options.OnRejected = async (context, token) =>
+    {
+        context.HttpContext.Response.ContentType = "application/problem+json";
+        await context.HttpContext.Response.WriteAsJsonAsync(new
+        {
+            title = "Demasiadas solicitudes. Intenta de nuevo en unos segundos.",
+            status = StatusCodes.Status429TooManyRequests
+        }, cancellationToken: token);
+    };
+});
+
 builder.Services.AddCors(options =>
     options.AddPolicy("Frontend", policy => policy
         .WithOrigins(builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? ["http://localhost:5173", "https://evidencechainweb.vercel.app"])
@@ -79,6 +122,8 @@ builder.Services.AddCors(options =>
         .WithExposedHeaders("ETag")));
 
 var app = builder.Build();
+
+app.UseRateLimiter();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
