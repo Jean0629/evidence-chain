@@ -9,7 +9,6 @@ import { useResolveTransfer } from '../custody-transfer/useResolveTransfer'
 import { useTransferMutation } from '../custody-transfer/useTransferMutation'
 import { AnomalyBanner } from './AnomalyBanner'
 import { ChainTimeline } from './ChainTimeline'
-import { PendingTransferBanner } from './PendingTransferBanner'
 import { useChainVerification } from './useChainVerification'
 import { useEvidenceChain } from './useEvidenceChain'
 import { useEvidenceDetail } from './useEvidenceDetail'
@@ -46,6 +45,7 @@ export function EvidenceDetailPage() {
 
   const [modalOpen, setModalOpen] = useState(false)
   const transferButtonRef = useRef<HTMLButtonElement>(null)
+  const timelineHeadingRef = useRef<HTMLHeadingElement>(null)
 
   if (detail.isPending) {
     return (
@@ -97,6 +97,7 @@ export function EvidenceDetailPage() {
   function handleConfirm(toCustodian: Custodian) {
     setModalOpen(false)
     transfer.submit(toCustodian)
+    timelineHeadingRef.current?.focus()
   }
 
   const transferError = transfer.error
@@ -107,24 +108,9 @@ export function EvidenceDetailPage() {
       <BackLink />
 
       <section className="rounded-lg border border-slate-200 bg-white p-5">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="font-mono text-xl font-semibold">{evidence.code}</h1>
-            <p className="mt-1 text-slate-700">{evidence.description}</p>
-          </div>
-          {isInvestigador && (
-            <button
-              ref={transferButtonRef}
-              type="button"
-              // Para que el botón conserve el foco al cerrar el modal.
-              aria-disabled={transferBlocked}
-              title={transferBlocked ? 'Ya existe una transferencia pendiente para esta evidencia.' : undefined}
-              onClick={openModal}
-              className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 aria-disabled:hover:bg-slate-900"
-            >
-              Transferir custodia
-            </button>
-          )}
+        <div>
+          <h1 className="font-mono text-xl font-semibold">{evidence.code}</h1>
+          <p className="mt-1 text-slate-700">{evidence.description}</p>
         </div>
         <dl className="mt-4 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
           <div>
@@ -142,55 +128,11 @@ export function EvidenceDetailPage() {
         <AnomalyBanner severity={evidence.anomalySeverity} reason={evidence.anomalyReason} />
       )}
 
-      {pending && (
-        <PendingTransferBanner
-          transfer={pending}
-          canResolve={isRecipient}
-          pendingAction={resolve.pendingAction}
-          onResolve={(action) => resolve.resolve(pending, action)}
-        />
-      )}
-
-      {transferError && (
-        <div role="alert" className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          <p className="font-medium">No se pudo crear la transferencia. No se realizó ningún cambio.</p>
-          <p className="mt-1">{transferError.message}</p>
-          <div className="mt-3 flex gap-2">
-            {isRetryable(transferError) && (
-              <button
-                type="button"
-                onClick={transfer.retry}
-                disabled={transfer.isPending}
-                className="rounded-md border border-red-300 bg-white px-3 py-1 text-red-700 hover:bg-red-100 disabled:opacity-50"
-              >
-                Reintentar
-              </button>
-            )}
-            <button type="button" onClick={transfer.reset} className="px-3 py-1 text-red-700 underline">
-              Descartar
-            </button>
-          </div>
-        </div>
-      )}
-
-      {resolveError && (
-        <div role="alert" className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          <p>{resolveError.message}</p>
-          <button type="button" onClick={resolve.reset} className="mt-2 underline">
-            Descartar
-          </button>
-        </div>
-      )}
-
-      {resolve.result && !resolveError && (
-        <p role="status" className="rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
-          Transferencia {transferStatusLabel(resolve.result.status)} correctamente.
-        </p>
-      )}
-
       <section className="rounded-lg border border-slate-200 bg-white p-5">
         <div className="mb-4 flex flex-wrap items-start justify-between gap-4">
-          <h2 className="text-base font-semibold">Cadena de custodia</h2>
+          <h2 ref={timelineHeadingRef} tabIndex={-1} className="text-base font-semibold focus:outline-none">
+            Cadena de custodia
+          </h2>
           <VerificationPanel
             result={verification.data}
             error={verification.error}
@@ -198,6 +140,46 @@ export function EvidenceDetailPage() {
             onVerify={() => void verification.refetch()}
           />
         </div>
+
+        {transferError && (
+          <div role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            <p className="font-medium">No se pudo crear la transferencia. No se realizó ningún cambio.</p>
+            <p className="mt-1">{transferError.message}</p>
+            <div className="mt-3 flex gap-2">
+              {isRetryable(transferError) && (
+                <button
+                  type="button"
+                  onClick={transfer.retry}
+                  disabled={transfer.isPending}
+                  className="rounded-md border border-red-300 bg-white px-3 py-1 text-red-700 hover:bg-red-100 disabled:opacity-50"
+                >
+                  Reintentar
+                </button>
+              )}
+              <button type="button" onClick={transfer.reset} className="px-3 py-1 text-red-700 underline">
+                Descartar
+              </button>
+            </div>
+          </div>
+        )}
+
+        {resolveError && (
+          <div role="alert" className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+            <p>{resolveError.message}</p>
+            <button type="button" onClick={resolve.reset} className="mt-2 underline">
+              Descartar
+            </button>
+          </div>
+        )}
+
+        {resolve.result && !resolveError && (
+          <p
+            role="status"
+            className="mb-4 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800"
+          >
+            Transferencia {transferStatusLabel(resolve.result.status)} correctamente.
+          </p>
+        )}
 
         {chain.isPending && (
           <div className="space-y-3" aria-busy="true" aria-label="Cargando cadena de custodia">
@@ -217,7 +199,18 @@ export function EvidenceDetailPage() {
         )}
 
         {chain.isSuccess && (
-          <ChainTimeline events={chain.data} invalidEventId={verification.data?.firstInvalidEventId ?? null} />
+          <ChainTimeline
+            key={id}
+            events={chain.data}
+            invalidEventId={verification.data?.firstInvalidEventId ?? null}
+            pendingTransfer={pending}
+            canResolvePending={isRecipient}
+            pendingAction={resolve.pendingAction}
+            onResolve={(action) => resolve.resolve(pending!, action)}
+            canStartTransfer={isInvestigador && !transferBlocked}
+            onStartTransfer={openModal}
+            startTransferRef={transferButtonRef}
+          />
         )}
       </section>
 

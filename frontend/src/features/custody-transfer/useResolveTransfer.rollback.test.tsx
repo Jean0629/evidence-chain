@@ -99,7 +99,7 @@ describe('useResolveTransfer — rollback y reconciliación ante 409', () => {
 
     renderDetail()
 
-    await screen.findByText('Transferencia pendiente')
+    await screen.findByRole('button', { name: 'Aceptar' })
     expect(detailRequestCount).toBe(1)
 
     fireEvent.click(screen.getByRole('button', { name: 'Aceptar' }))
