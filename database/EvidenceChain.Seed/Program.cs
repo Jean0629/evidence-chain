@@ -185,7 +185,7 @@ var expiredTransfer = new CustodyTransfer
     Status = TransferStatus.Pending,
     RequestedAtUtc = requestedAt
 };
-var requestedEv3 = CustodyEvent.Create(ev3.Id, CustodyEventType.TransferRequested, custodianA.Id, requestedAt, createdEv3.Hash, expiredTransfer.Id);
+var requestedEv3 = CustodyEvent.Create(ev3.Id, CustodyEventType.TransferRequested, investigadores[0].Id, requestedAt, createdEv3.Hash, expiredTransfer.Id);
 
 db.Evidences.Add(ev3);
 db.CustodyEvents.AddRange(createdEv3, requestedEv3);
