@@ -12,12 +12,12 @@
 - Frontend en React: login, bandeja con filtros persistidos en la URL, detalle con verificación de cadena, modal de transferencia con optimistic UI y accesibilidad (foco atrapado, Escape, retorno de foco), vista de transferencias pendientes para el rol Custodio.
 - Tests automatizados de backend: cadena alterada, idempotencia, conflicto de concurrencia, transición inválida (`backend/EvidenceChain.Tests/`).
 - `docs/ai-code-review.md`, `docs/ai-usage.md`, `docs/decisions.md`, `docs/code-map.md`.
+- Extra: rage limiting general en toda la API de 100/min y 20/min en `chain/verify` debido a que es una llamada costosa en cálculo.
 
 ## Qué dejé fuera del alcance obligatorio
 
-- Extras opcionales del enunciado: subida de archivos, rate limiting, i18n, segunda regla de anomalía, despliegue real en Azure con IaC.
-- Paginación "anterior" en la bandeja: la UI actual solo avanza; retroceder es viable del lado del cliente manteniendo una pila de cursores ya visitados, sin cambios en el backend, pero no llegué a implementarlo.
-- Verificar y, de ser necesario, completar los tests de frontend (búsqueda obsoleta, rollback ante 409) antes de la entrega final — confirmar su estado real contra el repositorio.
+- Extras opcionales del enunciado: subida de archivos, i18n.
+- Extras evaluados: Segunda regla de anomalía -> se planteó dos opciones, anomalía por número de transferencias (>4) en ventana de tiempo y por evidencia estancada por mucho tiempo (>96h). - Prueba con 200k eventos -> se evaluó simular dos escenarios, 200k eventos asignados a una evidencia para hacer una prueba de estrés sobre `chain/verify` o 200k eventos repartidos para medir el comportamiento de la paginación. - Despliegue en Azure -> problemas con la cuota asignada para la creación de recursos.
 
 ## Cómo levantar el proyecto, ejecutar el seed y las pruebas
 
