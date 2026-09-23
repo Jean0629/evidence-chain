@@ -1,4 +1,5 @@
 ﻿using EvidenceChain.Application.Evidence;
+using EvidenceChain.Domain.Entities;
 using EvidenceChain.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,8 +15,12 @@ namespace EvidenceChain.Infrastructure.Queries
                 .ThenBy(x => x.Id)
                 .ToListAsync();
 
-            string prevHash = EventHasher.Genesis;
+            return VerifyEvents(events);
+        }
 
+        public static ChainVerifyResult VerifyEvents(List<CustodyEvent> events)
+        {
+            string prevHash = EventHasher.Genesis;
             foreach (var ev in events)
             {
                 var expected = EventHasher.ComputeHash(ev.EvidenceId, ev.Type.ToString(), ev.ActorId, ev.OccurredAtUtc, prevHash);
@@ -24,7 +29,6 @@ namespace EvidenceChain.Infrastructure.Queries
 
                 prevHash = ev.Hash;
             }
-
             return new ChainVerifyResult(true, null);
         }
     }

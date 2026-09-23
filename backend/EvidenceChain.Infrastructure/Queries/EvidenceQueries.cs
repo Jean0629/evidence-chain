@@ -43,12 +43,22 @@ namespace EvidenceChain.Infrastructure.Queries
                 .Select(x => new EvidenceListItemDto(x.Id, x.Code, x.Description, x.CurrentCustodian.DisplayName, x.CreatedAtUtc, false, false))
                 .ToListAsync();
 
-            var itemsWithIntegrity = new List<EvidenceListItemDto>();
-            foreach (var item in items)
+            var evidenceIds = items.Select(i => i.Id).ToList();
+
+            var allEvents = await db.CustodyEvents
+                .Where(e => evidenceIds.Contains(e.EvidenceId))
+                .OrderBy(e => e.OccurredAtUtc).ThenBy(e => e.Id)
+                .ToListAsync();
+
+            var eventsByEvidence = allEvents.GroupBy(e => e.EvidenceId)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            var itemsWithIntegrity = items.Select(item =>
             {
-                var verify = await chainVerification.VerifyAsync(item.Id);
-                itemsWithIntegrity.Add(item with { IsIntegrityValid = verify.IsValid });
-            }
+                var events = eventsByEvidence.GetValueOrDefault(item.Id, new List<CustodyEvent>());
+                var verify = ChainVerification.VerifyEvents(events);
+                return item with { IsIntegrityValid = verify.IsValid };
+            }).ToList();
 
             string? nextCursor = items.Count == pageSize
                 ? $"{items[^1].LastEventAtUtc:O}_{items[^1].Id}"
